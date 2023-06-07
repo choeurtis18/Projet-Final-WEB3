@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Compositeurs{% endblock %}
+{% block title %}Instruments{% endblock %}
 
 {% block body %}
 <style>
@@ -9,15 +9,15 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Nos Compositeurs</h1>
+    <h1>Nos Instruments</h1>
 
     <ul>
-        {% for composer in composers %}
+        {% for instrument in instruments %}
             <li>
-                <a href="{{ path('app_composer_show', {'id':composer.id}) }}">{{composer.getName()}}</a>
+                <a href="{{ path('app_instrument_show', {'id':instrument.id}) }}">{{instrument.getName()}}</a>
             </li>
         {% endfor %}
     </ul>
-    <a href="{{ path('app_create_composer') }}">ajouter un compositeur</a>
+    <a href="{{ path('app_create_instrument') }}">ajouter un instrument</a>
 </div>
 {% endblock %}

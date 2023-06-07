@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} ADD ANNOUNCE {% endblock %}
-
-
+{% block title %}Instruments{% endblock %}
 
 {% block body %}
 <style>
@@ -11,9 +9,7 @@
 </style>
 
 <div class="example-wrapper">
-    <a href="{{ path('app_composers_show') }}">liste des compositeurs</a>
-    <p> Ajouter un compositeur</p>
-    {{ form(form) }}
+    <a href="{{ path('app_instruments_show') }}">liste des instruments</a>
+    <h1>{{ instrument.getName() }}</h1>
 </div>
-
 {% endblock %}

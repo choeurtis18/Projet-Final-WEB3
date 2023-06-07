@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Composer;
-use App\Repository\ComposerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +34,7 @@ class ComposerController extends AbstractController
     * @Route("/create_composer", name="app_create_composer")
     */ 
     #[Route('/create_composer', name: 'app_create_composer')]
-    public function create_composer(Request $request, EntityManagerInterface $entityManagerInterface, ManagerRegistry $doctrine) { 
+    public function create_composer(Request $request, EntityManagerInterface $entityManagerInterface) { 
         $composer = new Composer();
         $current_user = $this->getUser();
 

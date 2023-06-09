@@ -12,5 +12,13 @@
     <a href="{{ path('app_composers_show') }}">liste des compositeurs</a>
     <h1>{{ composer.getName() }}</h1>
     <p>{{ composer.getDescription() }}</p>
+    <p>Masterclass du compositeur :</p>
+    <ul>
+        {% for masterclas in masterclass %}
+            <li>
+                <a href="{{ path('app_masterclass_show', {'id':masterclas.id}) }}">{{masterclas.getTitle()}}</a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

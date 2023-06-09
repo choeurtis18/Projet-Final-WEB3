@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MasterclassRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MasterclassRepository::class)]
@@ -17,9 +18,6 @@ class Masterclass
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $video = null;
@@ -36,9 +34,6 @@ class Masterclass
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
     private ?instrument $Instrument = null;
 
-    #[ORM\ManyToMany(targetEntity: composer::class, inversedBy: 'masterclasses')]
-    private Collection $composer;
-
     #[ORM\ManyToMany(targetEntity: masterclassQuizz::class, inversedBy: 'masterclasses')]
     private Collection $MasterclassQuizz;
 
@@ -51,9 +46,14 @@ class Masterclass
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?FunFact $FunFact = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'masterclasses')]
+    private ?Composer $Composer = null;
+
     public function __construct()
     {
-        $this->composer = new ArrayCollection();
         $this->MasterclassQuizz = new ArrayCollection();
         $this->Formation = new ArrayCollection();
     }
@@ -75,17 +75,6 @@ class Masterclass
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getVideo(): ?string
     {
@@ -143,30 +132,6 @@ class Masterclass
     public function setInstrument(?instrument $Instrument): self
     {
         $this->Instrument = $Instrument;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, composer>
-     */
-    public function getComposer(): Collection
-    {
-        return $this->composer;
-    }
-
-    public function addComposer(composer $composer): self
-    {
-        if (!$this->composer->contains($composer)) {
-            $this->composer->add($composer);
-        }
-
-        return $this;
-    }
-
-    public function removeComposer(composer $composer): self
-    {
-        $this->composer->removeElement($composer);
 
         return $this;
     }
@@ -239,6 +204,30 @@ class Masterclass
     public function setFunFact(?FunFact $FunFact): self
     {
         $this->FunFact = $FunFact;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getComposer(): ?Composer
+    {
+        return $this->Composer;
+    }
+
+    public function setComposer(?Composer $Composer): self
+    {
+        $this->Composer = $Composer;
 
         return $this;
     }

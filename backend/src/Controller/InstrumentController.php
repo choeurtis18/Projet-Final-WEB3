@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Instrument;
+use App\Entity\Masterclass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,15 +67,18 @@ class InstrumentController extends AbstractController
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
-
+        $masterclass = $doctrine->getRepository(Masterclass::class)->findMasterclassByInstrument($instrument->getId());
+        
         if(!$instrument) {
             throw $this->createNotFoundException(
                 'No instrument found for id '.$id
             );
         }
 
-        return $this->render('instrument/show_instrument.html.twig', 
-            ['instrument' => $instrument]
+        return $this->render('instrument/show_instrument.html.twig', [
+            'instrument' => $instrument,
+            'masterclass' => $masterclass
+            ]
         );
 
         // or render a template

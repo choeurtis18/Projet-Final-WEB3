@@ -11,5 +11,13 @@
 <div class="example-wrapper">
     <a href="{{ path('app_instruments_show') }}">liste des instruments</a>
     <h1>{{ instrument.getName() }}</h1>
+    <p>Masterclass de l'instrument :</p>
+    <ul>
+        {% for masterclas in masterclass %}
+            <li>
+                <a href="{{ path('app_masterclass_show', {'id':masterclas.id}) }}">{{masterclas.getTitle()}}</a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

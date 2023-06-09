@@ -47,4 +47,13 @@ class MasterclassRepository extends ServiceEntityRepository
         
         return $return;
     }
+
+    public function findMasterclassByComposer($id) {
+        $return =  $this->createQueryBuilder('masterclass')
+            ->andWhere('masterclass.Composer = '. $id)
+            ->getQuery()
+            ->getResult();
+        
+        return $return;
+    }
 }

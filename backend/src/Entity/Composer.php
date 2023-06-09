@@ -21,7 +21,7 @@ class Composer
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: Masterclass::class, mappedBy: 'composer')]
+    #[ORM\OneToMany(mappedBy: 'Composer', targetEntity: Masterclass::class)]
     private Collection $masterclasses;
 
     public function __construct()
@@ -70,7 +70,7 @@ class Composer
     {
         if (!$this->masterclasses->contains($masterclass)) {
             $this->masterclasses->add($masterclass);
-            $masterclass->addComposer($this);
+            $masterclass->setComposer($this);
         }
 
         return $this;
@@ -79,7 +79,10 @@ class Composer
     public function removeMasterclass(Masterclass $masterclass): self
     {
         if ($this->masterclasses->removeElement($masterclass)) {
-            $masterclass->removeComposer($this);
+            // set the owning side to null (unless already changed)
+            if ($masterclass->getComposer() === $this) {
+                $masterclass->setComposer(null);
+            }
         }
 
         return $this;

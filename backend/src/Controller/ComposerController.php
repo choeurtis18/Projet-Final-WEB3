@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Composer;
+use App\Entity\Masterclass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,6 +77,7 @@ class ComposerController extends AbstractController
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
         $composer = $doctrine->getRepository(Composer::class)->find($id);
+        $masterclass = $doctrine->getRepository(Masterclass::class)->findMasterclassByComposer($composer->getId());
 
         if(!$composer) {
             throw $this->createNotFoundException(
@@ -83,12 +85,10 @@ class ComposerController extends AbstractController
             );
         }
 
-        return $this->render('composer/show_composer.html.twig', 
-            ['composer' => $composer]
+        return $this->render('composer/show_composer.html.twig', [
+            'composer' => $composer,
+            'masterclass' => $masterclass
+            ]
         );
-
-        // or render a template
-        // in the template, print things with {{ annonce.name }}
-        // return $this->render('annonce/show.html.twig', ['annonce' => $annonce]);
     }
 }

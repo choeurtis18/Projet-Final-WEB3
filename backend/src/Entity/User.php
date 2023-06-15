@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: event::class, inversedBy: 'users')]
     private Collection $event;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: FoRMATION::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
     private Collection $Formation;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Masterclass::class)]
@@ -184,14 +184,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, FoRMATION>
+     * @return Collection<int, Formation>
      */
     public function getFormation(): Collection
     {
         return $this->Formation;
     }
 
-    public function addFormation(FoRMATION $formation): self
+    public function addFormation(Formation $formation): self
     {
         if (!$this->Formation->contains($formation)) {
             $this->Formation->add($formation);
@@ -201,7 +201,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeFormation(FoRMATION $formation): self
+    public function removeFormation(Formation $formation): self
     {
         if ($this->Formation->removeElement($formation)) {
             // set the owning side to null (unless already changed)

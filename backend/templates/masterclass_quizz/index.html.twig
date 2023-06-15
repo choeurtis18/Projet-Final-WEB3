@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MasterclassQuizzController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello  ✅</h1>
+    This friendly message is coming from:
+
+     {% for quiz in quizzes %}
+                <tr>
+                    <td>{{ quiz.id }}</td>
+                   
+                </tr>
+    {% endfor %}
+    <ul>
+        <li>Your controller at <code><a href="{{ '/var/www/backend/src/Controller/MasterclassQuizzController.php'|file_link(0) }}">src/Controller/MasterclassQuizzController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/var/www/backend/templates/masterclass_quizz/index.html.twig'|file_link(0) }}">templates/masterclass_quizz/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}

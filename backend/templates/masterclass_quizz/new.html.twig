@@ -1,0 +1,14 @@
+{# templates/masterclass_quizz/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Masterclass Quizz{% endblock %}
+
+{% block body %}
+    <h1>Create Masterclass Quizz</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Create</button>
+    {{ form_end(form) }}
+{% endblock %}

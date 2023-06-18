@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du quiz{% endblock %}
+
+{% block body %}
+    <h1>Détails du quiz</h1>
+    
+    <p>ID : {{ quizz.id }}</p>
+    <p>Titre : {{ quizz.name }}</p>
+
+    <h2>Questions :</h2>
+    {% for question in quizz.getMasterclassQuestion() %}
+        <h3>{{ question.title }}</h3>
+        {% for proposition in question.getProposition() %}
+            <p>{{ proposition }}</p>
+        {% endfor %}
+
+        
+        <h4>Réponses :</h4>
+        {# {% for answer in question.answers %}
+            <p>{{ answer.content }}</p>
+        {% endfor %}  #}
+    {% endfor %} 
+    
+    <a href="{{ path('masterclass_quizz_index') }}">Retour à la liste des quiz</a>
+{% endblock %}

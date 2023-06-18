@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+
 class MasterclassQuizzController extends AbstractController
 {
     /**
@@ -27,25 +30,24 @@ class MasterclassQuizzController extends AbstractController
     /**
      * @Route("/masterclass/quizzes/new", name="masterclass_quizz_new", methods={"GET", "POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,ManagerRegistry $mangerRegistry): Response
     {
         $quizz = new MasterclassQuizz();
+
         $form = $this->createForm(MasterclassQuizzType::class, $quizz);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quizz);
             $entityManager->flush();
 
-            return $this->redirectToRoute('masterclass_quizz_index');
+            return $this->redirectToRoute('masterclass_quizz_show', ['id' => $quizz->getId()]);
         }
 
         return $this->render('masterclass_quizz/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/masterclass/quizzes/{id}", name="masterclass_quizz_show", methods={"GET"})
      */

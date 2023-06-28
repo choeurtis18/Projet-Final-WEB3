@@ -32,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: badge::class, inversedBy: 'users')]
     private Collection $badge;
 
-    #[ORM\ManyToMany(targetEntity: event::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
     private Collection $event;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
@@ -160,14 +160,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, event>
+     * @return Collection<int, Event>
      */
     public function getEvent(): Collection
     {
         return $this->event;
     }
 
-    public function addEvent(event $event): self
+    public function addEvent(Event $event): self
     {
         if (!$this->event->contains($event)) {
             $this->event->add($event);
@@ -176,7 +176,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeEvent(event $event): self
+    public function removeEvent(Event $event): self
     {
         $this->event->removeElement($event);
 

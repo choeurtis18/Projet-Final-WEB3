@@ -83,6 +83,6 @@ class InstrumentController extends AbstractController
 
         // or render a template
         // in the template, print things with {{ annonce.name }}
-        // return $this->render('annonce/show.html.twig', ['annonce' => $annonce]);
+        return $this->render('instrument/show.html.twig', ['annonce' => $instrument]);
     }
 }

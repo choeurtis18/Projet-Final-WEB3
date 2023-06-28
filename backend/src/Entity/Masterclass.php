@@ -32,7 +32,7 @@ class Masterclass
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
-    private ?instrument $Instrument = null;
+    private ?Instrument $Instrument = null;
 
     #[ORM\ManyToMany(targetEntity: masterclassQuizz::class, inversedBy: 'masterclasses')]
     private Collection $MasterclassQuizz;
@@ -124,12 +124,12 @@ class Masterclass
         return $this;
     }
 
-    public function getInstrument(): ?instrument
+    public function getInstrument(): ?Instrument
     {
         return $this->Instrument;
     }
 
-    public function setInstrument(?instrument $Instrument): self
+    public function setInstrument(?Instrument $Instrument): self
     {
         $this->Instrument = $Instrument;
 

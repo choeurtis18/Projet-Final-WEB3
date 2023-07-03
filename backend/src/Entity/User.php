@@ -29,7 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\ManyToMany(targetEntity: badge::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
     private Collection $badge;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
@@ -143,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->badge;
     }
 
-    public function addBadge(badge $badge): self
+    public function addBadge(Badge $badge): self
     {
         if (!$this->badge->contains($badge)) {
             $this->badge->add($badge);

@@ -17,6 +17,14 @@ cd backend
 composer require orm
 ```
 
+Depuis l'intérieur du container Symfony
+```shell
+cd backend
+composer install
+symfony console doctrine:database:create
+symfony console doctrine:migrations:migrate
+symfony console doctrine:fixtures:load
+
 (Demandez à Composer de **NE PAS** créer une config Docker pour la database)
 
 Enfin, modifiez la config DB dans le fichier .env de Symfony :

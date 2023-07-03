@@ -7,15 +7,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: InstrumentRepository::class)]
 class Instrument
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'Instrument', targetEntity: Masterclass::class)]

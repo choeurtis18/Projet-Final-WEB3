@@ -1,11 +1,15 @@
 import './App.css';
 import MasterclassQuizz from './components/MasterclassQuizz/MasterclassQuizz';
+
 import {jsQuizz} from "./constants";
+import ComposerList from './components/Composer/ComposerList';
 
 function App() {
 
   return (
-    <MasterclassQuizz questions={jsQuizz.questions} />
+    <>
+      <ComposerList/>
+    </>
   )
 }
 

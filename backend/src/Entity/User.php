@@ -9,48 +9,62 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['read_composer'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?string $password = null;
 
     #[ORM\ManyToMany(targetEntity: badge::class, inversedBy: 'users')]
+    #[Groups(['read_composer'])]
     private Collection $badge;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
+    #[Groups(['read_composer'])]
     private Collection $event;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
+    #[Groups(['read_composer'])]
     private Collection $Formation;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Masterclass::class)]
+    #[Groups(['read_composer'])]
     private Collection $Masterclass;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Classroom::class)]
+    #[Groups(['read_composer'])]
     private Collection $classroom;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: FormationLvl::class)]
+    #[Groups(['read_composer'])]
     private Collection $formationLvl;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassLvl::class)]
+    #[Groups(['read_composer'])]
     private Collection $MasterclassLvl;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassQuizz::class)]
+    #[Groups(['read_composer'])]
     private Collection $MasterclassQuizz;
 
     public function __construct()

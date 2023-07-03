@@ -5,28 +5,66 @@
 
 
 :root {
-      --primary-color: #150080;
-      --secondary-color: #d08642;
-      --background-color-primary: #ffffff;
-      --background-color-secondary: #e7e8e9;
-      --disabled: #9c9c9c;
-      --foreground:#2d264b;
-    
+      --primary-first: #7451EB;
+      --primary-second: #F4CF74;
+      --dark-primary-first: #231947;
+      --mid-primary-first: #372770;
+      --light-primary-first: #D1C4FD;
+      --lighter-primary-first: #EFEBFC;
+      --dark-primary-seond:#644D15;
+      --mid-primary-seond:#9A7825;
+      --light-primary-seond:#F7DEA2;
+      --lighter-primary-seond:#FFFAEE;
+      --dark-neutral:#285828;
+      --mid-neutral:#ADADAD;
+      --light-neutral:#FDFDFD;
+      --lighter-neutral:#FFFFFF;
 }
 
 
 body {
-  font-family: monospace;
+  font-family: "DM Sans";
   background: linear-gradient(0deg, var(--primary-color) 0.03%, var(--secondary-color));
   color: var(--foreground);
   display: flex;
+  font-size: 18px;
   justify-content: center;
   margin: 0 auto;
   padding: 0 30px;
   height: 100vh;
-
 }
 
+h1,h2,h3,h4,h5,h6{
+  font-weight: bold;
+}
+
+h1{
+  font-size: 56px;
+}
+
+h2{
+  font-size: 36px;
+}
+
+h3{
+  font-size: 24px;
+}
+
+h4{
+  font-size: 22px;
+}
+
+h5{
+  font-size: 18px;
+}
+
+h6{
+  font-size: 16px;
+}
+
+p{
+  font-size: 18px;
+}
 
 /* QUIZZ */
 .quizz-container{

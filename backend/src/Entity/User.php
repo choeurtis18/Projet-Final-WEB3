@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
     #[Groups(['read_composer'])]
-    private Collection $event;
+    private Collection $Event;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
     #[Groups(['read_composer'])]
@@ -69,8 +69,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->badge = new ArrayCollection();
-        $this->event = new ArrayCollection();
+        $this->Badge = new ArrayCollection();
+        $this->Event = new ArrayCollection();
         $this->Formation = new ArrayCollection();
         $this->Masterclass = new ArrayCollection();
         $this->classroom = new ArrayCollection();
@@ -181,18 +181,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->event;
     }
 
-    public function addEvent(Event $event): self
+    public function addEvent(Event $Event): self
     {
-        if (!$this->event->contains($event)) {
-            $this->event->add($event);
+        if (!$this->Event->contains($Event)) {
+            $this->Event->add($Event);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeEvent(Event $Event): self
+
     {
-        $this->event->removeElement($event);
+        $this->Event->removeElement($Event);
 
         return $this;
     }

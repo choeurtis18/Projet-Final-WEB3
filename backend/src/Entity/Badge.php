@@ -26,7 +26,7 @@ class Badge
     #[Groups(['read_composer'])]
     private ?string $image = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'badge')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Badge')]
     private Collection $users;
 
     public function __construct()

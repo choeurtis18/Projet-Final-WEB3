@@ -35,7 +35,7 @@ class Event
     #[Groups(['read_composer'])]
     private ?\DateTimeInterface $date_end = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'event')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Event')]
     private Collection $users;
 
     public function __construct()

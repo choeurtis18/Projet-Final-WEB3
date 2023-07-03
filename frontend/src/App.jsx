@@ -1,15 +1,13 @@
 import './App.css';
-import MasterclassQuizz from './components/MasterclassQuizz/MasterclassQuizz';
-
-import {jsQuizz} from "./constants";
-import ComposerList from './components/Composer/ComposerList';
+import HomePage from './pages/Homepage/HomePage';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
 
   return (
-    <>
-      <ComposerList/>
-    </>
+    <Router>
+      <HomePage />
+    </Router>
   )
 }
 

@@ -28,7 +28,7 @@ class Event
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_end = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'event')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Event')]
     private Collection $users;
 
     public function __construct()

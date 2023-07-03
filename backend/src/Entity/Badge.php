@@ -21,7 +21,7 @@ class Badge
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'badge')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Badge')]
     private Collection $users;
 
     public function __construct()

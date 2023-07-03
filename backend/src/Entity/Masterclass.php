@@ -32,13 +32,13 @@ class Masterclass
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
-    private ?instrument $Instrument = null;
+    private ?Instrument $Instrument = null;
 
-    #[ORM\ManyToMany(targetEntity: masterclassQuizz::class, inversedBy: 'masterclasses')]
+    #[ORM\ManyToMany(targetEntity: MasterclassQuizz::class, inversedBy: 'masterclasses')]
     private Collection $MasterclassQuizz;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Masterclasslvl $masterclassLvl = null;
+    private ?MasterclassLvl $masterclassLvl = null;
 
     #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'masterclasses')]
     private Collection $Formation;
@@ -160,12 +160,12 @@ class Masterclass
         return $this;
     }
 
-    public function getMasterclassLvl(): ?Masterclasslvl
+    public function getMasterclassLvl(): ?MasterclassLvl
     {
         return $this->masterclassLvl;
     }
 
-    public function setMasterclassLvl(?Masterclasslvl $masterclassLvl): self
+    public function setMasterclassLvl(?MasterclassLvl $masterclassLvl): self
     {
         $this->masterclassLvl = $masterclassLvl;
 

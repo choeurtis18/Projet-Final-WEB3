@@ -8,24 +8,31 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: MasterclassQuestionRepository::class)]
 class MasterclassQuestion
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $answer = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read_composer'])]
     private ?int $xp_value = null;
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    #[Groups(['read_composer'])]
     private array $proposition = [];
 
     #[ORM\ManyToMany(targetEntity: MasterclassQuizz::class, mappedBy: 'MasterclassQuestion')]

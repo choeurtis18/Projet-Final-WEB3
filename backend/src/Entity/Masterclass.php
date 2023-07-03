@@ -8,45 +8,59 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: MasterclassRepository::class)]
 class Masterclass
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $video = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $certification = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read_composer'])]
     private ?string $partition_file = null;
 
     #[ORM\ManyToOne(inversedBy: 'Masterclass')]
+    #[Groups(['read_composer'])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
+    #[Groups(['read_composer'])]
     private ?Instrument $Instrument = null;
 
     #[ORM\ManyToMany(targetEntity: MasterclassQuizz::class, inversedBy: 'masterclasses')]
+    #[Groups(['read_composer'])]
     private Collection $MasterclassQuizz;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Groups(['read_composer'])]
     private ?MasterclassLvl $masterclassLvl = null;
 
     #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'masterclasses')]
+    #[Groups(['read_composer'])]
     private Collection $Formation;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Groups(['read_composer'])]
     private ?FunFact $FunFact = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['read_composer'])]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
@@ -144,7 +158,7 @@ class Masterclass
         return $this->MasterclassQuizz;
     }
 
-    public function addMasterclassQuizz(masterclassQuizz $masterclassQuizz): self
+    public function addMasterclassQuizz(MasterclassQuizz $masterclassQuizz): self
     {
         if (!$this->MasterclassQuizz->contains($masterclassQuizz)) {
             $this->MasterclassQuizz->add($masterclassQuizz);
@@ -153,7 +167,7 @@ class Masterclass
         return $this;
     }
 
-    public function removeMasterclassQuizz(masterclassQuizz $masterclassQuizz): self
+    public function removeMasterclassQuizz(MasterclassQuizz $masterclassQuizz): self
     {
         $this->MasterclassQuizz->removeElement($masterclassQuizz);
 

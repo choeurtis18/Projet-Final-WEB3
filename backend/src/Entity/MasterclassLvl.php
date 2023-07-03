@@ -5,21 +5,27 @@ namespace App\Entity;
 use App\Repository\MasterclassLvlRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: MasterclassLvlRepository::class)]
 class MasterclassLvl
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read_composer'])]
     private ?int $progression = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read_composer'])]
     private ?int $progression_xp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read_composer'])]
     private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'MasterclassLvl')]

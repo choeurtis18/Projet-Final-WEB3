@@ -27,7 +27,17 @@ class InstrumentController extends AbstractController
             );
         }
 
-        return $this->render('instrument/index.html.twig', ['instruments' => $instruments]);
+        //return $this->render('instrument/index.html.twig', ['instruments' => $instruments]);
+        
+        try {
+            return $this->json([
+                'instruments' => $instruments
+            ], 200, [], ['groups' => 'main']);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'error' => "instruments not found"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     #[Route('/create_instrument', name: 'app_create_instrument')]
@@ -69,6 +79,7 @@ class InstrumentController extends AbstractController
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
         $masterclass = $doctrine->getRepository(Masterclass::class)->findMasterclassByInstrument($instrument->getId());
         
+        /*
         if(!$instrument) {
             throw $this->createNotFoundException(
                 'No instrument found for id '.$id
@@ -80,9 +91,17 @@ class InstrumentController extends AbstractController
             'masterclass' => $masterclass
             ]
         );
+        */
 
-        // or render a template
-        // in the template, print things with {{ annonce.name }}
-        return $this->render('instrument/show.html.twig', ['annonce' => $instrument]);
+        try {
+            return $this->json([
+                'instrument' => $instrument,
+                'masterclass' => $masterclass
+            ], 200, [], ['groups' => 'main']);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'error' => "instrument not found"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

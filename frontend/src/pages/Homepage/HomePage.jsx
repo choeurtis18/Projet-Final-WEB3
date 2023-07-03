@@ -6,7 +6,7 @@ function Homepage() {
   const [selectedMasterclass, setSelectedMasterclass] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8245/masterclassesjson')
+    fetch('http://localhost:8245/masterclassjson')
       .then(response => response.json())
       .then(data => setMasterclasses(data))
       .catch(error => console.error(error));

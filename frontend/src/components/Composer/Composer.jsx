@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 
 import useGetComposer from "../../Hook/useGetComposer";
 
-const Composer = () => {
+const Composer = (id) => {
     const [instruments, setInstruments] = useState([]);
     const [masterclasses, setMasterclasses] = useState([]);
     const [composer, setComposer] = useState([]);
     const getComposer = useGetComposer();
 
     useEffect(() => {
-        getComposer(3).then(data => {
+        getComposer(id).then(data => {
             console.log(data.composer);
             setComposer(data.composer);
             setMasterclasses(data.composer.masterclasses);

@@ -19,7 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class MasterclassController extends AbstractController
 {
-    #[Route('/masterclasss', name: 'app_masterclasss_show')]
+    #[Route('/masterclas', name: 'app_masterclass_list_show')]
     public function index(ManagerRegistry $doctrine): Response
     {
         $masterclasss = $doctrine->getRepository(Masterclass::class)->findAll();
@@ -106,23 +106,23 @@ class MasterclassController extends AbstractController
         ]);
     }
 
-    // #[Route('/masterclass/{id}', name: 'app_masterclass_show')]
-    // public function show(ManagerRegistry $doctrine, int $id): Response
-    // {
-    //     $masterclass = $doctrine->getRepository(Masterclass::class)->find($id);
+    #[Route('/masterclass/{id}', name: 'app_masterclass_show')]
+    public function show(ManagerRegistry $doctrine, int $id): Response
+    {
+        $masterclass = $doctrine->getRepository(Masterclass::class)->find($id);
 
-    //     if(!$masterclass) {
-    //         throw $this->createNotFoundException(
-    //             'No masterclass found for id '.$id
-    //         );
-    //     }
+        if(!$masterclass) {
+            throw $this->createNotFoundException(
+                'No masterclass found for id '.$id
+            );
+        }
 
-    //     return $this->render('masterclass/show_masterclass.html.twig', 
-    //         ['masterclass' => $masterclass]
-    //     );
+        return $this->render('masterclass/show_masterclass.html.twig', 
+            ['masterclass' => $masterclass]
+        );
 
-    //     // or render a template
-    //     // in the template, print things with {{ annonce.name }}
-    //     // return $this->render('annonce/show.html.twig', ['annonce' => $annonce]);
-    // }
+        // or render a template
+        // in the template, print things with {{ annonce.name }}
+        return $this->render('masterclass/show.html.twig', ['annonce' => $masterclass]);
+    }
 }

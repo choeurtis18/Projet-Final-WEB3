@@ -35,6 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
     private Collection $Event;
 
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
     private Collection $Formation;
 
@@ -160,7 +161,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, event>
+     * @return Collection<int, Event>
      */
     public function getEvent(): Collection
     {
@@ -177,6 +178,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function removeEvent(Event $Event): self
+
     {
         $this->Event->removeElement($Event);
 

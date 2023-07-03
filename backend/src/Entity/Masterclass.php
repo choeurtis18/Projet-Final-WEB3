@@ -124,12 +124,12 @@ class Masterclass
         return $this;
     }
 
-    public function getInstrument(): ?instrument
+    public function getInstrument(): ?Instrument
     {
         return $this->Instrument;
     }
 
-    public function setInstrument(?instrument $Instrument): self
+    public function setInstrument(?Instrument $Instrument): self
     {
         $this->Instrument = $Instrument;
 

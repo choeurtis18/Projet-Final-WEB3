@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/composers' element={<ComposerList/>}/>
-        <Route path='/composer:id' element={<Composer/>}/>
+        <Route path='/composer/:id' element={<Composer/>}/>
       </Routes>
     </BrowserRouter>
   )

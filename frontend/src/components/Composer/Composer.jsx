@@ -1,9 +1,11 @@
+import {useParams} from "react-router-dom";
 import { useState, useEffect } from "react";
 //import {NavLink} from "react-router-dom";
 
 import useGetComposer from "../../Hook/useGetComposer";
 
-const Composer = (id) => {
+const Composer = () => {
+    const {id} = useParams();
     const [instruments, setInstruments] = useState([]);
     const [masterclasses, setMasterclasses] = useState([]);
     const [composer, setComposer] = useState([]);

@@ -1,56 +1,47 @@
+import {useParams} from "react-router-dom";
 import { useState, useEffect } from "react";
 //import {NavLink} from "react-router-dom";
 
 import useGetInstrument from "../../Hook/useGetInstrument";
-import useAddInstrument from "../../Hook/useAddInstrument";
 
-const Instrument = ({ questions }) => {
+const Instrument = () => {
+    const {id} = useParams();
     const [instrument, setInstrument] = useState([]);
+    const [masterclasses, setMasterclasses] = useState([]);
+
     const getInstrument = useGetInstrument();
 
     useEffect(() => {
-        getInstrument().then(data => {
+        getInstrument(id).then(data => {
             setInstrument(data.instrument);
+            setMasterclasses(data.masterclass);
         });
     }, []);
 
 
-    const [returnMessage, setReturnMessage] = useState('');
-    const [instrumentName, setInstrumentName] = useState('');
-    const addInstrument = useAddInstrument();
-    
-    const handleChangeName = (e) => {
-        setInstrumentName(e.target.value);
-    }
-
-    const handleSubmit = (e) => {
-        addInstrument(instrumentName, instrumentDescription).then(data => {
-            setReturnMessage(data.messages);
-        });
-    }
-
     return (
-        <div>
-            <h1 className='m-5 text-center'>{instrument.name}</h1>
+        <div className="w-full">
+            <h1 className='text-3xl my-12 font-medium text-center text-primary_first font-black'>{instrument.name}</h1>
 
-            <h2 className='m-5 text-center'>Les masterclasses</h2>
-            { /*
-                instrument.masterclasses.map((masterclasse, index) => (
-                    <span key={index}>{masterclasse.name}</span>    
-                    <NavLink key={index} to={`/masterclasse/${masterclasse.id}`}
-                                className='text-black text-decoration-none w-100 d-block text-center 10'>
-                        {masterclasse.name}
-                    </NavLink>
-                ))
+            <div className="flex flex-col my-4 lg:flex md:flex">
+                <h2 className='text-2xl my-8 font-medium text-mid_primary_second font-black'>Les masterclasses</h2>
+                <div className='flex flex-wrap gap-8 text-center'>
+                {
+                    masterclasses.map((masterclasse, index) => (
+                        <div className="border border-mid_primary_second rounded-lg p-4 lg:w-1/3 bg-ligther_primary_second grid gap-y-2" key={index}>
+                            <h3 className="text-xl font-black text-mid_primary_second font-black">{masterclasse.title}</h3>
+                            <p>{masterclasse.description}</p>
+                        </div>  
+                    ))
+                /*
+                <NavLink key={index} to={`/masterclasse/${masterclasse.id}`}
+                            className='text-black text-decoration-none w-100 d-block text-center 10'>
+                    {masterclasse.name}
+                </NavLink>
                 */
-            }
-
-            <span>{returnMessage}</span>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='message' className='form-label'>Ajoutez un compositeur</label>
-                <input type="text" className='w-75 mb-5 d-block form-control' id='compositeurName'
-                        onChange={handleChangeName} value={instrumentName}/>
-            </form>
+                }
+                </div>     
+            </div>
         </div>
     );
 };

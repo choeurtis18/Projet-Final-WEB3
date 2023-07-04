@@ -13,7 +13,6 @@ const Composer = () => {
 
     useEffect(() => {
         getComposer(id).then(data => {
-            console.log(data.composer);
             setComposer(data.composer);
             setMasterclasses(data.composer.masterclasses);
             setInstruments(getUniqueInstrumentNames(data.composer.masterclasses));
@@ -38,14 +37,14 @@ const Composer = () => {
 
     return (
         <div className="w-full">
-            <h1 className='text-3xl my-4 font-medium text-center'>{composer.name}</h1>
+            <h1 className='text-3xl my-12 text-primary_first font-black'>{composer.name}</h1>
             <div className="grid gap-x-16 my-4 lg:flex">
                 <div className='w-auto lg:w-2/3'>
-                    <h2 className="text-2xl font-bold">Description</h2>
+                    <h2 className="text-2xl font-bold text-mid_primary_first font-black">Description</h2>
                     <p className=''>{composer.description}</p>                
                 </div>
                 <div className='w-auto lg:w-1/3'>
-                    <h2 className="text-2xl font-bold">Les instruments</h2>
+                    <h2 className="text-2xl font-bold text-dark_primary_first font-black">Les instruments</h2>
                     <div className='flex flex-col'>
                     {
                         instruments.map((instrument, index) => (
@@ -56,13 +55,13 @@ const Composer = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col my-4 lg:flex md:flex">
-                <h2 className='text-2xl my-2 font-medium'>Les masterclasses</h2>
-                <div className='flex flex-wrap gap-8'>
+            <div className="flex flex-col my-12 lg:flex md:flex">
+                <h2 className='text-2xl my-2 font-medium text-mid_primary_second font-black'>Les masterclasses</h2>
+                <div className='flex flex-wrap gap-8 text-center'>
                 {
                     masterclasses.map((masterclasse, index) => (
-                        <div className="border border-gray-200 rounded-lg p-4 lg:w-1/3" key={index}>
-                            <h3 className="text-xl font-bold">{masterclasse.title}</h3>
+                        <div className="border border-gray-200 rounded-lg p-4 lg:w-1/3 bg-ligther_primary_second grid gap-y-2" key={index}>
+                            <h3 className="text-xl font-black text-mid_primary_second font-black">{masterclasse.title}</h3>
                             <p>{masterclasse.description}</p>
                         </div>  
                     ))

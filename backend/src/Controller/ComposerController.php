@@ -26,16 +26,6 @@ class ComposerController extends AbstractController
     {
         $composers = $doctrine->getRepository(Composer::class)->findAll();
         
-        // if(!$composers) {
-        //     throw $this->createNotFoundException(
-        //         'No composer found'
-        //     );
-        // }
-
-        // //var_dump($composers);
-        // return $this->render('composer/index.html.twig', ['composers' => $composers]);
-
-
         try {
             return $this->json([
                 'composers' => $composers
@@ -117,22 +107,6 @@ class ComposerController extends AbstractController
     {
         $composer = $doctrine->getRepository(Composer::class)->find($id);
         $masterclass = $doctrine->getRepository(Masterclass::class)->findMasterclassByComposer($composer->getId());
-        
-        /*
-        if(!$composer) {
-            throw $this->createNotFoundException(
-                'No composer found for id '.$id
-            );
-        }
-
-        //var_dump($masterclass);
-        
-        return $this->render('composer/show_composer.html.twig', [
-            'composer' => $composer,
-            'masterclass' => $masterclass
-            ]
-        );
-        */
 
         try {
             return $this->json([

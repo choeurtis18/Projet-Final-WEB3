@@ -6,6 +6,10 @@ import Nav from './pages/Nav/Nav';
 import Homepage from './pages/Homepage/HomePage';
 import MasterclassQuizz from './pages/MasterclassQuizz/MasterclassQuizz';
 import MasterclassDetails from './pages/MasterclassDetails/MasterclassDetails';
+import Composer from './components/Composer/Composer';
+import ComposerList from './components/Composer/ComposerList';
+import Instrument from './components/Instrument/Instrument';
+import InstrumentList from './components/Instrument/InstrumentList';
 import Footer from './pages/Footer/Footer';
 // ... import other components
 

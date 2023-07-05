@@ -36,7 +36,7 @@ services:
             PMA_HOST: db
         networks:
             - dev
-
+    
 networks:
     dev:
 

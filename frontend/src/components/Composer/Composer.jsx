@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import useGetComposer from "../../Hook/useGetComposer";
 
-const Composer = () => {
+function Composer ()  {
     const {id} = useParams();
     const [instruments, setInstruments] = useState([]);
     const [masterclasses, setMasterclasses] = useState([]);

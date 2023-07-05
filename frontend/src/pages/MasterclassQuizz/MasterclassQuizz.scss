@@ -1,0 +1,34 @@
+.quizz-pres{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    .h1{
+        text-align: center;
+    }
+    img{
+        width: 250px;
+    }
+
+    .footer{
+        float:right;
+    }
+}
+
+.quizz-container{
+ 
+   .selected-answer{
+    font-size: 45px;
+   }
+
+   .button{
+
+    &:disabled{
+        cursor: not-allowed;
+    }
+   }
+
+}

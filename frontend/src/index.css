@@ -1,8 +1,6 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 :root {
       --primary-first: #7451EB;
@@ -26,11 +24,11 @@ body {
   font-family: "DM Sans";
   background: linear-gradient(0deg, var(--primary-color) 0.03%, var(--secondary-color));
   color: var(--foreground);
-  display: flex;
+  padding: 0;
+  margin: 0;
   font-size: 18px;
   justify-content: center;
   margin: 0 auto;
-  padding: 0 30px;
   height: 100vh;
 }
 
@@ -66,10 +64,51 @@ p{
   font-size: 18px;
 }
 
+.header{
+  margin-bottom: 25px;
+  margin-top: 5px;
+}
+
+.subtitle::after{
+  content: '';
+}
+
+.title-secondary{
+  font-weight: bold;
+  color: var(--primary-first);
+  font-size: 34px;
+}
+
+.title-tertiary{
+  font-size: 34px;
+  font-weight: bold;
+  color: var(--light-neutral);
+}
+
+.subtitle-secondary{
+  color:var(--light-neutral)
+}
+
+section{
+}
+
+.container{
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bg-secondary{
+  background: rgba(35,24,71,1);
+}
+
+
+
+
+
 /* QUIZZ */
 .quizz-container{
     width: 500px;
-    background: var(--background-color-primary);
+    background: var(--primary-first);
     border-radius: 4px;
     margin-top: 100px;
     padding: 30px 60px;
@@ -114,7 +153,6 @@ p{
 }
 
 .total-question{
-  font-size: 6px;
   font-weight: 500;
   color: var(--disabled);
 }

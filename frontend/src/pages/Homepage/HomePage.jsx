@@ -13,6 +13,7 @@ function Homepage() {
       .then((response) => response.json())
       .then((data) => setMasterclasses(data))
       .catch((error) => console.error(error));
+
   }, []);
 
   const handleMasterclassSelection = (masterclass) => {

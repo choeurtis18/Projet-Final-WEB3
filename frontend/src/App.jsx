@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+
 import Nav from './pages/Nav/Nav';
 import Homepage from './pages/Homepage/HomePage';
 import MasterclassQuizz from './pages/MasterclassQuizz/MasterclassQuizz';
@@ -17,12 +18,16 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/masterclass/:id" component={MasterclassDetails} />
         <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
-
+        <Route exact path='/composers' element={<ComposerList/>}/>
+        <Route exact path='/composer/:id' element={<Composer/>}/>
+        <Route exact path='/instruments' element={<InstrumentList/>}/>
+        <Route exact path='/instrument/:id' element={<Instrument/>}/>
         {/* Add other routes for other tables */}
       </Switch>
       <Footer/>
     </Router>
   );
+
 }
 
 export default App;

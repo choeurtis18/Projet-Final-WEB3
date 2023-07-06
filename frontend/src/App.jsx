@@ -25,7 +25,9 @@ function App() {
           <Switch>
             {/* Define your routes */}
             <Route exact path="/" component={Homepage} />
-            <Route exact path="/masterclass/:id" component={MasterclassDetails} />
+            <Route exact path="/masterclasses" component={MasterclassList} />
+            <Route exact path="/masterclass/:id" component={Masterclass} />
+            <Route exact path="/masterclasses/:id" component={MasterclassDetails} />
             <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
             <Route exact path='/composers' component={ComposerList} />
             <Route exact path='/composer/:id' component={Composer} />

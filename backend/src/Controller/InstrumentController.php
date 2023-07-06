@@ -92,12 +92,10 @@ class InstrumentController extends AbstractController
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
-        $masterclass = $doctrine->getRepository(Masterclass::class)->findMasterclassByInstrument($instrument->getId());
         
         try {
             return $this->json([
                 'instrument' => $instrument,
-                'masterclass' => $masterclass
             ], 200, [], ['groups' => 'read_composer']);
         } catch (\Exception $exception) {
             return $this->json([

@@ -29,7 +29,7 @@ const Masterclass = () => {
     }, []);
 
   return (
-      <div className="w-fit lg:mx-16">
+      <div className="w-full px-4 lg:px-16 md:px-16">
         <NavLink to={`/masterclasses`}
                     className="">
             Revoir la liste des masterclasses

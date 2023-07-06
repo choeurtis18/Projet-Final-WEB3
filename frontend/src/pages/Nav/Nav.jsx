@@ -1,11 +1,13 @@
 import React from "react";
 import "./nav.css";
 import logo from "../../assets/logo.svg";
+import user_icon from "../../assets/user-information-290.svg";
+
 
 const Nav = () => {
   return (
     
-<nav className="w-full bg-white border-gray-200 dark:bg-gray-900">
+<nav className="w-full bg-dark_primary_first text-ligther_neutral">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <a href="/" className="flex items-center">
       <img src={logo} className="h-8 mr-3" alt="Flowbite Logo" />
@@ -13,7 +15,7 @@ const Nav = () => {
   <div className="flex items-center md:order-2">
       <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span className="sr-only">Open user menu</span>
-        <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo" />
+        <img className="w-8 h-8 rounded-full" src={user_icon} alt="user photo" />
       </button>
       <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
         <div className="px-4 py-3">

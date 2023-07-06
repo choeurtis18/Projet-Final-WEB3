@@ -19,7 +19,7 @@ class Event
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -114,5 +114,15 @@ class Event
         }
 
         return $this;
+    }
+
+    public function hydrate(array $donnees)
+    {
+        foreach($donnees as $cle =>$valeur) {
+            $method='set'.ucfirst($cle);
+            if(method_exists($this,$method)) {
+                return $this->$method($valeur);
+            }
+        }
     }
 }

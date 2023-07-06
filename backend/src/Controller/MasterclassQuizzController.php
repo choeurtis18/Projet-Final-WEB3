@@ -57,4 +57,38 @@ class MasterclassQuizzController extends AbstractController
 
         return new JsonResponse($data);
     }
+
+     /**
+     * @Route("/masterclass-quizz/{id}", name="get_masterclass_quizz", methods={"GET"})
+     */
+    public function getMasterclassQuizzId(int $id, MasterclassQuizzRepository $masterclassQuizzRepository): JsonResponse
+    {
+        $masterclassQuizz = $masterclassQuizzRepository->find($id);
+
+        if (!$masterclassQuizz) {
+            throw $this->createNotFoundException('Masterclass Quizz not found.');
+        }
+
+        $masterclassQuestions = $masterclassQuizz->getMasterclassQuestion();
+        $questionsData = [];
+        foreach ($masterclassQuestions as $masterclassQuestion) {
+            $questionData = [
+                'id' => $masterclassQuestion->getId(),
+                'title' => $masterclassQuestion->getTitle(),
+                'answer' => $masterclassQuestion->getAnswer(),
+                'xp_value' => $masterclassQuestion->getXpValue(),
+                'proposition' => $masterclassQuestion->getProposition(),
+            ];
+            $questionsData[] = $questionData;
+        }
+
+        $quizzData = [
+            'id' => $masterclassQuizz->getId(),
+            'name' => $masterclassQuizz->getName(),
+            'counter' => $masterclassQuizz->getCounter(),
+            'questions' => $questionsData,
+        ];
+
+        return new JsonResponse($quizzData);
+    }
 }

@@ -1,0 +1,151 @@
+@import url(../../index.css);
+
+.banner {
+    color: white;
+    background: url('../../assets/banner.png') top left/cover no-repeat;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .white-space{
+    height: 20vh;
+
+  }
+
+  .formations{
+    
+
+  }
+
+  .formations h4,h6{
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .formations .container-cards{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 10px
+    }
+
+    .card-homepage {
+      background-color: #FDFDFD;
+      width: 100%;
+      max-width: 275px;
+      max-height: 175px;
+      margin-bottom: 30px;
+    }
+
+    .card-homepage .card-header{
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: center;
+      place-self: center;
+      padding: 10px;
+    }
+
+    .card-homepage .card-header a > h5{
+      margin: auto;
+      font-weight: bold;
+      font-size: 16px;
+      
+    }
+
+    .card-homepage > p{
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    .card-homepage .card-header img{
+      border-radius: 8px;
+      max-width: 46px;
+    }
+
+    .card-homepage > a{
+      color: #7451EB;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      font-size: 12px;
+    }
+
+
+    .full-container{
+      padding: 30px;
+    }
+
+    .full-container .container{
+      display: flex;
+      flex-direction: row;
+      gap: 5rem;
+    }
+
+   .full-container .card {
+      width: 258px;
+      height: 349px;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
+   }
+    .full-container .card img {
+      position: absolute;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0.9;
+      transition: opacity 0.2s ease-out;
+   }
+   .full-container  .card h2 {
+      position: absolute;
+      inset: auto auto 30px 30px;
+      margin: 0;
+      transition: inset 0.3s 0.3s ease-out;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #FDFDFD;
+   }
+    .full-container .card p, .card a {
+      position: absolute;
+      opacity: 0;
+      max-width: 80%;
+      transition: opacity 0.3s ease-out;
+   }
+    .card p {
+      inset: auto auto 80px 30px;
+   }
+    .card a {
+      inset: auto auto 40px 30px;
+      color: #FDFDFD;
+      text-decoration: none;
+   }
+    .card:hover h2 {
+      inset: auto auto 105px 30px;
+      transition: inset 0.3s ease-out;
+   }
+    .card:hover p, .card:hover a {
+      opacity: 1;
+      transition: opacity 0.5s 0.1s ease-in;
+      color: #FDFDFD;
+      font-weight: 500;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+   }
+    .card:hover img {
+      transition: opacity 0.3s ease-in;
+      opacity: 1;
+   }
+
+    

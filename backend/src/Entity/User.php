@@ -35,7 +35,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['read_composer'])]
     private ?string $password = null;
 
-    #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
+
+    #[ORM\ManyToMany(targetEntity: badge::class, inversedBy: 'users')]
     private Collection $badge;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]

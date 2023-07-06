@@ -5,21 +5,27 @@ namespace App\Entity;
 use App\Repository\FormationLvlRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: FormationLvlRepository::class)]
 class FormationLvl
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read_composer'])]
     private ?int $progression = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read_composer'])]
     private ?int $progression_xp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read_composer'])]
     private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'formationLvl')]

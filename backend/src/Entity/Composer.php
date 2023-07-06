@@ -5,7 +5,10 @@ namespace App\Entity;
 use App\Repository\ComposerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ComposerRepository::class)]
 class Composer
@@ -13,15 +16,19 @@ class Composer
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['read_composer'])]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'Composer', targetEntity: Masterclass::class)]
+    #[Groups(['read_composer'])]
     private Collection $masterclasses;
 
     public function __construct()

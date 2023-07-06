@@ -2,93 +2,93 @@
 
 namespace App\Controller;
 
-use App\Entity\MasterclassQuizz;
-use App\Form\MasterclassQuizzType;
 use App\Repository\MasterclassQuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 
 class MasterclassQuizzController extends AbstractController
 {
     /**
      * @Route("/masterclass/quizzes", name="masterclass_quizz_index", methods={"GET"})
      */
-    public function index(MasterclassQuizzRepository $masterclassQuizzRepository): Response
+    public function index(MasterclassQuizzRepository $masterclassQuizzRepository): JsonResponse
     {
         $quizzes = $masterclassQuizzRepository->findAll();
 
-        return $this->render('masterclass_quizz/index.html.twig', [
-            'quizzes' => $quizzes,
-        ]);
+        $quizArray = array_map(function ($quiz) {
+            return $quiz->toArray();
+        }, $quizzes);
+
+        return new JsonResponse($quizArray);
     }
 
     /**
-     * @Route("/masterclass/quizzes/new", name="masterclass_quizz_new", methods={"GET", "POST"})
+     * @Route("/masterclass-quizz", name="masterclass_quizz_list", methods={"GET"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager,ManagerRegistry $mangerRegistry): Response
+    public function listMasterclassQuizz(MasterclassQuizzRepository $masterclassQuizzRepository): JsonResponse
     {
-        $quizz = new MasterclassQuizz();
+        $masterclassQuizzs = $masterclassQuizzRepository->findAll();
 
-        $form = $this->createForm(MasterclassQuizzType::class, $quizz);
-        $form->handleRequest($request);
+        $data = [];
+        foreach ($masterclassQuizzs as $masterclassQuizz) {
+            $masterclassQuestions = $masterclassQuizz->getMasterclassQuestion();
+            $questionsData = [];
+            foreach ($masterclassQuestions as $masterclassQuestion) {
+                $questionData = [
+                    'id' => $masterclassQuestion->getId(),
+                    'title' => $masterclassQuestion->getTitle(),
+                    'answer' => $masterclassQuestion->getAnswer(),
+                    'xp_value' => $masterclassQuestion->getXpValue(),
+                    'proposition' => $masterclassQuestion->getProposition(),
+                ];
+                $questionsData[] = $questionData;
+            }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($quizz);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('masterclass_quizz_show', ['id' => $quizz->getId()]);
+            $quizzData = [
+                'id' => $masterclassQuizz->getId(),
+                'name' => $masterclassQuizz->getName(),
+                'counter' => $masterclassQuizz->getCounter(),
+                'questions' => $questionsData,
+            ];
+            $data[] = $quizzData;
         }
 
-        return $this->render('masterclass_quizz/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-    /**
-     * @Route("/masterclass/quizzes/{id}", name="masterclass_quizz_show", methods={"GET"})
-     */
-    public function show(MasterclassQuizz $quizz): Response
-    {
-        return $this->render('masterclass_quizz/show.html.twig', [
-            'quizz' => $quizz,
-        ]);
+        return new JsonResponse($data);
     }
 
-    /**
-     * @Route("/masterclass/quizzes/{id}/edit", name="masterclass_quizz_edit", methods={"GET", "POST"})
+     /**
+     * @Route("/masterclass-quizz/{id}", name="get_masterclass_quizz", methods={"GET"})
      */
-    public function edit(Request $request, MasterclassQuizz $quizz): Response
+    public function getMasterclassQuizzId(int $id, MasterclassQuizzRepository $masterclassQuizzRepository): JsonResponse
     {
-        $form = $this->createForm(MasterclassQuizzType::class, $quizz);
-        $form->handleRequest($request);
+        $masterclassQuizz = $masterclassQuizzRepository->find($id);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('masterclass_quizz_index');
+        if (!$masterclassQuizz) {
+            throw $this->createNotFoundException('Masterclass Quizz not found.');
         }
 
-        return $this->render('masterclass_quizz/edit.html.twig', [
-            'quizz' => $quizz,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/masterclass/quizzes/{id}", name="masterclass_quizz_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, MasterclassQuizz $quizz): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$quizz->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($quizz);
-            $entityManager->flush();
+        $masterclassQuestions = $masterclassQuizz->getMasterclassQuestion();
+        $questionsData = [];
+        foreach ($masterclassQuestions as $masterclassQuestion) {
+            $questionData = [
+                'id' => $masterclassQuestion->getId(),
+                'title' => $masterclassQuestion->getTitle(),
+                'answer' => $masterclassQuestion->getAnswer(),
+                'xp_value' => $masterclassQuestion->getXpValue(),
+                'proposition' => $masterclassQuestion->getProposition(),
+            ];
+            $questionsData[] = $questionData;
         }
 
-        return $this->redirectToRoute('masterclass_quizz_index');
+        $quizzData = [
+            'id' => $masterclassQuizz->getId(),
+            'name' => $masterclassQuizz->getName(),
+            'counter' => $masterclassQuizz->getCounter(),
+            'questions' => $questionsData,
+        ];
+
+        return new JsonResponse($quizzData);
     }
 }

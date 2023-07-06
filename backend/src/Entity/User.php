@@ -9,54 +9,69 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['read_composer'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?string $password = null;
 
-    #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
+
+    #[ORM\ManyToMany(targetEntity: badge::class, inversedBy: 'users')]
+    #[Groups(['read_composer'])]
     private Collection $badge;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
-    private Collection $event;
+    #[Groups(['read_composer'])]
+    private Collection $Event;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
+    #[Groups(['read_composer'])]
     private Collection $Formation;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Masterclass::class)]
+    #[Groups(['read_composer'])]
     private Collection $Masterclass;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Classroom::class)]
+    #[Groups(['read_composer'])]
     private Collection $classroom;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: FormationLvl::class)]
+    #[Groups(['read_composer'])]
     private Collection $formationLvl;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassLvl::class)]
+    #[Groups(['read_composer'])]
     private Collection $MasterclassLvl;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassQuizz::class)]
+    #[Groups(['read_composer'])]
     private Collection $MasterclassQuizz;
 
     public function __construct()
     {
-        $this->badge = new ArrayCollection();
-        $this->event = new ArrayCollection();
+        $this->Badge = new ArrayCollection();
+        $this->Event = new ArrayCollection();
         $this->Formation = new ArrayCollection();
         $this->Masterclass = new ArrayCollection();
         $this->classroom = new ArrayCollection();
@@ -167,18 +182,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->event;
     }
 
-    public function addEvent(Event $event): self
+    public function addEvent(Event $Event): self
     {
-        if (!$this->event->contains($event)) {
-            $this->event->add($event);
+        if (!$this->Event->contains($Event)) {
+            $this->Event->add($Event);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeEvent(Event $Event): self
+
     {
-        $this->event->removeElement($event);
+        $this->Event->removeElement($Event);
 
         return $this;
     }

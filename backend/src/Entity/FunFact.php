@@ -5,18 +5,24 @@ namespace App\Entity;
 use App\Repository\FunFactRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: FunFactRepository::class)]
 class FunFact
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_composer'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255,nullable: true)]
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['read_composer'])]
     private ?string $description = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

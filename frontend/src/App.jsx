@@ -10,6 +10,7 @@ import ComposerList from './components/Composer/ComposerList';
 import Instrument from './components/Instrument/Instrument';
 import InstrumentList from './components/Instrument/InstrumentList';
 import Footer from './pages/Footer/Footer';
+import Register from './pages/Registration/Register';
 // ... import other components
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route exact path='/composer/:id' component={Composer}/>
         <Route exact path='/instruments' component={InstrumentList}/>
         <Route exact path='/instrument/:id' component={Instrument}/>
+        <Route exact path='/register' component={Register}/>
         {/* Add other routes for other tables */}
       </Switch>
       <Footer/>

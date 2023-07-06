@@ -5,6 +5,7 @@ import {NavLink} from "react-router-dom";
 import useGetMasterclass from "../../Hook/useGetMasterclass";
 import useGetMasterclassCentreDeFormation from "../../Hook/useGetMasterclassCentreDeFormation";
 import OthersMasterclass from "../../components/Masterclass/OthersMasterclass";
+//import MasterclassDetails from "../MasterclassDetails/MasterclassDetails";
 
 const Masterclass = () => {
     const isMounted = useRef(false)
@@ -42,7 +43,8 @@ const Masterclass = () => {
               <div className='w-auto lg:w-1/3'>
                   <h2 className="text-2xl font-bold text-dark_primary_first font-black">Centre de formation</h2>
                   <div className='flex flex-col'>
-                  <p>{centre_formation.email}</p>         
+                  <p>{centre_formation.email}</p>  
+                  {/*<MasterclassDetails></MasterclassDetails>*/}       
                   </div>     
               </div>
           </div>

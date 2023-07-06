@@ -3,9 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Composer;
+use App\Entity\Formation;
 use App\Entity\Instrument;
 use App\Entity\Masterclass;
+use App\Entity\User;
 use App\Form\Type\ComposerType;
+use App\Repository\ComposerRepository;
+use App\Repository\InstrumentRepository;
+use App\Repository\MasterclassRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,17 +25,20 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class MasterclassController extends AbstractController
 {
-    #[Route('/masterclas', name: 'app_masterclass_list_show')]
+    #[Route('/masterclasses', name: 'app_masterclass_list_show')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $masterclasss = $doctrine->getRepository(Masterclass::class)->findAll();
-        if(!$masterclasss) {
-            throw $this->createNotFoundException(
-                'No masterclass found'
-            );
-        }
+        $masterclasses = $doctrine->getRepository(Masterclass::class)->findAll();
 
-        return $this->render('masterclass/index.html.twig', ['masterclasss' => $masterclasss]);
+        try {
+            return $this->json([
+                'masterclasses' => $masterclasses
+            ], 200, [], ['groups' => 'read_composer']);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'error' => "instruments not found"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     #[Route('/create_masterclass', name: 'app_create_masterclass')]
@@ -107,22 +116,72 @@ class MasterclassController extends AbstractController
     }
 
     #[Route('/masterclass/{id}', name: 'app_masterclass_show')]
-    public function show(ManagerRegistry $doctrine, int $id): Response
+    public function show(MasterclassRepository $masterclassRepository, int $id): Response
     {
-        $masterclass = $doctrine->getRepository(Masterclass::class)->find($id);
+        $masterclass = $masterclassRepository->findOneBy(['id' => $id]);
 
-        if(!$masterclass) {
-            throw $this->createNotFoundException(
-                'No masterclass found for id '.$id
-            );
+        try {
+            return $this->json([
+                'masterclass' => $masterclass
+            ], 200, [], ['groups' => 'read_composer']);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'error' => "masterclass not found"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
 
-        return $this->render('masterclass/show_masterclass.html.twig', 
-            ['masterclass' => $masterclass]
-        );
+    #[Route('/masterclass/instrument/{id}', name: 'app_masterclass_instrument_show')]
+    public function showMasterclassByInstrument(InstrumentRepository $instrumentRepository, int $id,
+                                                    MasterclassRepository $masterclassRepository): Response
+    {
+        try {
+            $instrument = $instrumentRepository->findOneBy(['id' => $id]);
+            $masterclasses = $masterclassRepository->findMasterclassByInstrument($instrument->getId());
 
-        // or render a template
-        // in the template, print things with {{ annonce.name }}
-        return $this->render('masterclass/show.html.twig', ['annonce' => $masterclass]);
+            return $this->json([
+                'masterclasses' => $masterclasses
+            ], 200, [], ['groups' => 'read_composer']);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'error' => "masterclass not found \n".$exception
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route('/masterclass/composer/{id}', name: 'app_masterclass_composer_show')]
+    public function showMasterclassByComposer(ComposerRepository $composerRepository, int $id,
+                                                    MasterclassRepository $masterclassRepository): Response
+    {
+        try {
+            $composer = $composerRepository->findOneBy(['id' => $id]);
+            $masterclasses = $masterclassRepository->findMasterclassByComposer($composer->getId());
+
+            return $this->json([
+                'masterclasses' => $masterclasses
+            ], 200, [], ['groups' => 'read_composer']);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'error' => "masterclass not found \n".$exception
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route('/masterclasses/centredeformation/{id}', name: 'app_masterclasses_centredeformation_show')]
+    public function showMasterclassByCentreDeFormation(UserRepository $userRepository, int $id,
+                                                    MasterclassRepository $masterclassRepository): Response
+    {
+            $user = $userRepository->findOneBy(['id' => $id]);
+            $masterclasses = $masterclassRepository->findMasterclassByCentreDeFormation($user->getId());
+
+        try {
+            return $this->json([
+                'masterclasses' => $masterclasses
+            ], 200, [], ['groups' => 'read_composer']);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'error' => "masterclass not found"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

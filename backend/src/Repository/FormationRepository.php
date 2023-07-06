@@ -39,6 +39,19 @@ class FormationRepository extends ServiceEntityRepository
         }
     }
 
+    public function findFormationByMasterclass($id) {
+        $return =  $this->createQueryBuilder('formation')
+            ->select('f')
+            ->from(Formation::class, 'f')
+            ->join('f.masterclasses', 'm')
+            ->where('m.id = :masterclassId')
+            ->setParameter('masterclassId', $id)
+            ->getQuery()
+            ->getResult();
+        
+        return $return;
+    }
+    
 //    /**
 //     * @return Formation[] Returns an array of Formation objects
 //     */

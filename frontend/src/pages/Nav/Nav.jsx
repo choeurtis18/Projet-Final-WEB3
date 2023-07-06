@@ -63,7 +63,7 @@ const Nav = () => {
   </div>
   </div>
 </nav>
-
+</header>  
   );
 };
 

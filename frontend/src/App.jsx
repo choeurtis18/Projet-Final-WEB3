@@ -15,19 +15,23 @@ import Footer from './pages/Footer/Footer';
 function App() {
   return (
     <Router>
-      <Nav/>
-      <Switch>
-        {/* Define your routes */}
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/masterclass/:id" component={MasterclassDetails} />
-        <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
-        <Route exact path='/composers' component={ComposerList}/>
-        <Route exact path='/composer/:id' component={Composer}/>
-        <Route exact path='/instruments' component={InstrumentList}/>
-        <Route exact path='/instrument/:id' component={Instrument}/>
-        {/* Add other routes for other tables */}
-      </Switch>
-      <Footer/>
+      <div className='main-content' >
+        <Nav />
+        <div style={{ flex: '1' }}>
+          <Switch>
+            {/* Define your routes */}
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/masterclass/:id" component={MasterclassDetails} />
+            <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
+            <Route exact path='/composers' component={ComposerList} />
+            <Route exact path='/composer/:id' component={Composer} />
+            <Route exact path='/instruments' component={InstrumentList} />
+            <Route exact path='/instrument/:id' component={Instrument} />
+            {/* Add other routes for other tables */}
+          </Switch>
+        </div>
+        <Footer />
+      </div>
     </Router>
   );
 }

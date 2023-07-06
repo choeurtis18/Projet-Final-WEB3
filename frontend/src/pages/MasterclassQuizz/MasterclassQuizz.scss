@@ -19,9 +19,49 @@
 }
 
 .quizz-container{
- 
+
+    margin: 0 auto;
+    max-width: 900px;
+    min-height: 500px;
+    vertical-align: ce;
+    display: flex;
+    align-items: center;
+    
+    .header-title{
+        h2{
+            font-size: 31px;
+            font-weight: bold;
+        }
+    }
    .selected-answer{
     font-size: 45px;
+   }
+
+   ul{
+    list-style: none;
+    margin: 0;
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   }
+
+   .button-quizz{
+    width: 325px;
+    height: 68px;
+    position: relative;
+    background: #f3f0f1;
+    margin-bottom: 25px;
+    border-radius: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    span{
+        line-height: 70px;
+        font-size: 20px;
+        font-weight: semibold;
+    }
    }
 
    .button{
@@ -32,3 +72,36 @@
    }
 
 }
+
+.hide-answer {
+    display: none;
+  }
+
+  
+
+  .full-container{
+    background-color: #E5E5E5;
+  }
+
+  .gradLine3{
+    width: 100%;
+    margin: 20px auto 0 auto;
+    display: block;
+    border: none;
+    height: 5px;
+    background: #F4CF74;
+  }
+
+  .gradLine3:after {
+    /* content: "💎"; */
+     content: "🏡";
+     font-style: none;
+     display: inline-block;
+     position: relative;
+     top: -0.7em;
+     font-size: 1.5em;
+     padding: 0 0.25em;
+     background: white;
+     border: 1px solid #777;
+     border-radius: 20px;
+ }

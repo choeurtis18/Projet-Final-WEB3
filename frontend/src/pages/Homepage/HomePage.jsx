@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import MasterclassQuizz from "../MasterclassDetails/MasterclassDetails";
-import Nav from "../Nav/Nav";
 import "./Homepage.css";
 import prof from "../../assets/prof.png";
 

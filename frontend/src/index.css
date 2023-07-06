@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
       --primary-first: #7451EB;
       --primary-second: #F4CF74;
@@ -19,6 +18,17 @@
       --lighter-neutral:#FFFFFF;
 }
 
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 
 body {
   font-family: "DM Sans";
@@ -27,10 +37,30 @@ body {
   padding: 0;
   margin: 0;
   font-size: 18px;
-  justify-content: center;
   margin: 0 auto;
-  height: 100vh;
+ 
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure all parent elements have 100% height to fill the entire viewport */
+#root, /* Or any other container element */
+.App {
+  height: 100%;
+}
+
+.main-content{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+footer{}
+
+
 
 h1,h2,h3,h4,h5,h6{
   font-weight: bold;
@@ -89,8 +119,7 @@ p{
   color:var(--light-neutral)
 }
 
-section{
-}
+
 
 .container{
   max-width: 900px;
@@ -101,101 +130,3 @@ section{
   background: rgba(35,24,71,1);
 }
 
-
-
-
-
-/* QUIZZ */
-.quizz-container{
-    width: 500px;
-    background: var(--primary-first);
-    border-radius: 4px;
-    margin-top: 100px;
-    padding: 30px 60px;
-    box-sizing: border-box;
-}
-
-.quizz-container h2{
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0;
-}
-
-.quizz-container ul{
-  margin-top: 20px;
-  margin-left: -40px;
-}
-
-.quizz-container ul li{
-  text-decoration: none;
-  list-style: none;
-  color: var(--foreground);
-  font-size: 16px;
-  background: var(--background-color-primary);
-  border: 1px solid var(--disabled);
-  border-radius: 16px;
-  padding: 11px;
-  margin-top: 15px;
-  cursor: pointer;
-}
-
-.quizz-container .selected-answer{
-  background:var(--primary-color);
-  border: 1px solid var(--secondary-color);
-  color: var(--background-color-primary);
-}
-
-
-.active-question-no{
-  font-size: 32px;
-  font-weight: 500;
-  color: var(--primary-color);
-}
-
-.total-question{
-  font-weight: 500;
-  color: var(--disabled);
-}
-
-.quizz-container .footer{
-  display: flex;
-  justify-content: flex-end;
-}
-
-
-.quizz-container button{
-  background: linear-gradient(0deg, var(--primary-color) 0.03%, var(--secondary-color));
-  border-radius: 9px;
-  font-size: 18px;
-  color: var(--background-color-primary);
-  padding: 10px 42px;
-  outline: none;
-  border: none;
-  margin-top: 15px;
-  cursor: pointer;
-}
-
-
-.quizz-container button:disabled{
-  background: var(--background-color-secondary);
-  color: var(--disabled);
-  cursor: not-allowed;
-}
-
-
-.quizz-container .result {
-text-align: center;
-}
-
-.quizz-container .result h3{
-  font-size: 24px;
-  letter-spacing: 1.4px;
-  text-align: center;
-}
-
-
-.quizz-container .result p{
-  font-size: 16px;
-  letter-spacing: 1.4px;
-  text-align: center;
-}

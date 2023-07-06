@@ -1,8 +1,7 @@
-// QuizDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import './MasterclassQuizz.scss';
-import test from "../../assets/test250.jpg";
+import test from '../../assets/test250.jpg';
 
 function MasterclassQuizz() {
   const { quizId } = useParams();
@@ -12,13 +11,16 @@ function MasterclassQuizz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerIdx, setAnswerIdx] = useState(null);
   const [answerQuestion, setAnswerQuestion] = useState(null);
-  const resultInitialState = {
+  const [correctAnswer, setCorrectAnswer] = useState('');
+  const [result, setResult] = useState({
     score: 0,
     correctAnswers: 0,
     wrongAnswers: 0
-  };
-  const [result, setResult] = useState(resultInitialState);
+  });
   const [showResult, setShowResult] = useState(false);
+  const [showCorrection, setShowCorrection] = useState(false);
+  const [answered, setAnswered] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   useEffect(() => {
     fetch(`http://localhost:8245/masterclass-quizz/${quizId}`)
@@ -38,6 +40,11 @@ function MasterclassQuizz() {
 
   const handleCancel = () => {
     history.goBack(); // Go back to the previous page (masterclass)
+  };
+
+  const handleContinue = () => {
+    setShowCorrection(false);
+    setCurrentQuestion(prev => prev + 1);
   };
 
   if (!selectedStarted) {
@@ -70,61 +77,90 @@ function MasterclassQuizz() {
   const { title, proposition, answer } = quiz.questions[currentQuestion];
 
   const onAnswerClick = (selectedAnswer, index) => {
-    setAnswerIdx(index);
-    if (selectedAnswer === answer) {
-      setAnswerQuestion(true);
-      setResult((prev) => ({
-        ...prev,
-        score: prev.score + 5,
-        correctAnswers: prev.correctAnswers + 1
-      }));
-    } else {
-      setAnswerQuestion(false);
-      setResult((prev) => ({
-        ...prev,
-        wrongAnswers: prev.wrongAnswers + 1
-      }));
+    if (!answered) {
+      setAnswerIdx(index);
+      setAnswered(true);
+      setSelectedAnswer(selectedAnswer);
+      if (selectedAnswer === answer) {
+        setAnswerQuestion(true);
+        setCorrectAnswer(answer);
+        console.log(correctAnswer);
+      } else {
+        setAnswerQuestion(false);
+      }
     }
   };
-
+  
   const onClickNext = () => {
-    setAnswerIdx(null);
-    if (currentQuestion !== quiz.questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
-    } else {
-      setCurrentQuestion(0);
-      setShowResult(true);
+    if (answered) {
+      setAnswered(false);
+      setAnswerIdx(null);
+      setResult((prev) => {
+        return answerQuestion
+          ? {
+              ...prev,
+              score: prev.score + 5,
+              correctAnswers: prev.correctAnswers + 1,
+            }
+          : {
+              ...prev,
+              wrongAnswers: prev.wrongAnswers + 1,
+            };
+      });
+  
+      if (currentQuestion !== quiz.questions.length - 1) {
+        setShowCorrection(true);
+      } else {
+        setShowCorrection(true); // Afficher la correction de la dernière question
+      }
     }
   };
+  
 
-  return (
+const onClickContinue = () => {
+  setShowCorrection(false);
+  setCurrentQuestion(prev => prev + 1);
+};
+
+return (
+  <div className="full-container">
     <div className='quizz-container'>
-      {!showResult ? (
-        <div>
+      {!showCorrection ? (
+        <div className=''>
+          <div className="header-title">
+            <h2>{title}</h2>
+          </div>
           <span className='active-question-no'>{currentQuestion + 1}</span>
           <span className='total-question'>/{quiz.questions.length}</span>
-          <h2>{title}</h2>
           <ul>
-            {proposition.map((proposition, index) => (
-              <li
-                onClick={() => onAnswerClick(proposition, index)}
-                key={index}
-                className={answerIdx === index ? 'selected-answer' : null}
-              >
-                {proposition}
-              </li>
-            ))}
+            {proposition.map((proposition, index) => {
+              const isCorrectAnswer = answerIdx === index && answered && answerQuestion;
+              const isSelected = answerIdx === index && !answered;
+              return (
+                <li
+                  onClick={() => onAnswerClick(proposition, index)}
+                  key={index}
+                  className={isSelected ? 'button-quizz selected-answer' : 'button-quizz'}
+                >
+                  <span>{isCorrectAnswer ? '✓ ' : ''}{proposition}</span>
+                </li>
+              );
+            })}
           </ul>
-          {answerIdx !== null && (
-            <div className="feedback">
-              {answerQuestion ? <p className="correct">Bonne réponse !</p> : <p className="wrong">Mauvaise réponse.</p>}
-              <button onClick={onClickNext}>Suivant</button>
-            </div>
-          )}
+          <div className='footer'>
+            <button onClick={onClickNext} disabled={answerIdx === null}>
+              {currentQuestion === quiz.questions.length - 1 ? 'Terminé' : 'Suivant'}
+            </button>
+          </div>
+        </div>
+      ) : showCorrection && currentQuestion !== quiz.questions.length - 1 ? (
+        <div className='correction'>
+          <p>Bonne réponse : <span>{quiz.questions[currentQuestion].answer}</span></p>
+          <button onClick={onClickContinue}>Continuer</button>
         </div>
       ) : (
         <div className='result'>
-          <h3>Resultats:</h3>
+          <h3>Résultats:</h3>
           <p>Total questions : <span>{quiz.questions.length}</span></p>
           <p>Total Score : <span>{result.score}</span></p>
           <p>Bonnes réponses : <span>{result.correctAnswers}</span></p>
@@ -132,7 +168,9 @@ function MasterclassQuizz() {
         </div>
       )}
     </div>
-  );
+    <div className="gradLine3"></div>
+  </div>
+);
 }
 
 export default MasterclassQuizz;

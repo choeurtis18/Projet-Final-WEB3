@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Composer;
-use App\Entity\Formation;
 use App\Entity\Instrument;
 use App\Entity\Masterclass;
-use App\Entity\User;
-use App\Form\Type\ComposerType;
 use App\Repository\ComposerRepository;
 use App\Repository\InstrumentRepository;
 use App\Repository\MasterclassRepository;
@@ -26,9 +23,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class MasterclassController extends AbstractController
 {
     #[Route('/masterclasses', name: 'app_masterclass_list_show')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(MasterclassRepository $masterclassRepository): Response
     {
-        $masterclasses = $doctrine->getRepository(Masterclass::class)->findAll();
+        $masterclasses = $masterclassRepository->findAll();
 
         try {
             return $this->json([

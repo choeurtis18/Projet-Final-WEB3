@@ -5,7 +5,7 @@ import logo from "../../assets/logo.svg";
 const Nav = () => {
   return (
     
-<nav className="bg-white border-gray-200 dark:bg-gray-900">
+<nav className="w-full bg-white border-gray-200 dark:bg-gray-900">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <a href="/" className="flex items-center">
       <img src={logo} className="h-8 mr-3" alt="Flowbite Logo" />

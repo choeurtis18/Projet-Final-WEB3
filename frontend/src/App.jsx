@@ -12,6 +12,7 @@ import ComposerList from './pages/Composers/ComposerList';
 import Instrument from './pages/Instruments/Instrument';
 import InstrumentList from './pages/Instruments/InstrumentList';
 import Footer from './pages/Footer/Footer';
+import Register from './pages/Registration/Register';
 // ... import other components
 
 
@@ -26,10 +27,11 @@ function App() {
         <Route exact path="/masterclass/:id" component={Masterclass} />
         <Route exact path="/masterclasses/:id" component={MasterclassDetails} />
         <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
-        <Route exact path="/composers" component={ComposerList}/>
-        <Route exact path="/composer/:id" component={Composer}/>
-        <Route exact path="/instruments" component={InstrumentList}/>
-        <Route exact path="/instrument/:id" component={Instrument}/>
+        <Route exact path='/composers' component={ComposerList}/>
+        <Route exact path='/composer/:id' component={Composer}/>
+        <Route exact path='/instruments' component={InstrumentList}/>
+        <Route exact path='/instrument/:id' component={Instrument}/>
+        <Route exact path='/register' component={Register}/>
         {/* Add other routes for other tables */}
       </Switch>
       <Footer/>

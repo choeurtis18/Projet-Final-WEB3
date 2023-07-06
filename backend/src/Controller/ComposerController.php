@@ -3,18 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Composer;
-use App\Entity\Masterclass;
 use App\Repository\ComposerRepository;
+use App\Repository\MasterclassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 
@@ -22,9 +17,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class ComposerController extends AbstractController
 {
     #[Route('/composers', name: 'app_composers_show')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ComposerRepository $composerRepository): Response
     {
-        $composers = $doctrine->getRepository(Composer::class)->findAll();
+        $composers = $composerRepository->findAll();
         
         try {
             return $this->json([
@@ -35,7 +30,7 @@ class ComposerController extends AbstractController
                 'error' => "composers not found"
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-     }
+    }
 
     /**
     * @Route("/create_composer", name="app_create_composer")
@@ -103,10 +98,11 @@ class ComposerController extends AbstractController
     }
 
     #[Route('/composer/{id}', name: 'app_composer_show')]
-    public function show(ManagerRegistry $doctrine, int $id): Response
+    public function show(MasterclassRepository $masterclassRepository, ComposerRepository $composerRepository, 
+                            int $id): Response
     {
-        $composer = $doctrine->getRepository(Composer::class)->find($id);
-        $masterclass = $doctrine->getRepository(Masterclass::class)->findMasterclassByComposer($composer->getId());
+        $composer = $composerRepository->findOneBy(['id' => $id]);
+        $masterclass = $masterclassRepository->findMasterclassByComposer($composer->getId());
 
         try {
             return $this->json([

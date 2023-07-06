@@ -7,7 +7,7 @@ const Instrument = () => {
     const {id} = useParams();
 
     return (
-        <div className="w-full">
+        <div className="w-full px-4 lg:px-16 md:px-16">
             <NavLink to={`/instruments`}
                         className="">
                 Revoir la liste des instruments

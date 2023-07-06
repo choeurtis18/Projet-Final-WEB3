@@ -8,7 +8,6 @@ import OthersMasterclass from "../../components/Masterclass/OthersMasterclass";
 //import MasterclassDetails from "../MasterclassDetails/MasterclassDetails";
 
 const Masterclass = () => {
-    const isMounted = useRef(false)
     const {id} = useParams();
     const [masterclass, setMasterclass] = useState([]);
     const [centre_formation, setCentre_formation] = useState([]);
@@ -16,20 +15,17 @@ const Masterclass = () => {
     const getMasterclassCentreDeFormation = useGetMasterclassCentreDeFormation();
   
     useEffect(() => {
-        if (isMounted.current === false) {
-            Promise.all([
-                getMasterclassCentreDeFormation(id),
-                getMasterclass(id),
-            ]).then(([cDf, masterLcass]) => {
-                setMasterclass(masterLcass.masterclass)
-                setCentre_formation(cDf.centre_formation)
-            })
-            isMounted.current = true
-        }
-    }, []);
+        Promise.all([
+            getMasterclassCentreDeFormation(id),
+            getMasterclass(id),
+        ]).then(([cDf, masterLcass]) => {
+            setMasterclass(masterLcass.masterclass)
+            setCentre_formation(cDf.centre_formation)
+        })
+    }, [id]);
 
   return (
-      <div className="w-full">
+      <div className="w-full px-4 lg:px-16 md:px-16">
         <NavLink to={`/masterclasses`}
                     className="">
             Revoir la liste des masterclasses

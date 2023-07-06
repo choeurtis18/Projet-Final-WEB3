@@ -36,27 +36,21 @@ class Masterclass
     private ?string $partition_file = null;
 
     #[ORM\ManyToOne(inversedBy: 'Masterclass')]
-    #[Groups(['read_composer'])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
-    #[Groups(['read_composer'])]
     private ?Instrument $Instrument = null;
 
     #[ORM\ManyToMany(targetEntity: MasterclassQuizz::class, inversedBy: 'masterclasses')]
-    #[Groups(['read_composer'])]
     private Collection $MasterclassQuizz;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Groups(['read_composer'])]
     private ?MasterclassLvl $masterclassLvl = null;
 
     #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'masterclasses')]
-    #[Groups(['read_composer'])]
     private Collection $Formation;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Groups(['read_composer'])]
     private ?FunFact $FunFact = null;
 
     #[ORM\Column(type: Types::TEXT)]

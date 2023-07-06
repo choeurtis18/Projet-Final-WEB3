@@ -28,7 +28,6 @@ class Composer
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'Composer', targetEntity: Masterclass::class)]
-    #[Groups(['read_composer'])]
     private Collection $masterclasses;
 
     public function __construct()

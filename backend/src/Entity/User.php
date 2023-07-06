@@ -35,6 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['read_composer'])]
     private ?string $password = null;
 
+
     #[ORM\ManyToMany(targetEntity: badge::class, inversedBy: 'users')]
     #[Groups(['read_composer'])]
     private Collection $badge;
@@ -157,7 +158,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->badge;
     }
 
-    public function addBadge(badge $badge): self
+    public function addBadge(Badge $badge): self
     {
         if (!$this->badge->contains($badge)) {
             $this->badge->add($badge);

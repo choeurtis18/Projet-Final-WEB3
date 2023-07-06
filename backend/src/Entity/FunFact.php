@@ -20,9 +20,14 @@ class FunFact
     #[Groups(['read_composer'])]
     private ?string $name = null;
 
+
     #[ORM\Column(length: 255)]
     #[Groups(['read_composer'])]
     private ?string $description = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Masterclass $Masterclass = null;
 
     public function getId(): ?int
     {
@@ -52,4 +57,17 @@ class FunFact
 
         return $this;
     }
+
+    public function getMasterclass(): ?Masterclass
+    {
+        return $this->Masterclass;
+    }
+
+    public function setMasterclass(Masterclass $Masterclass): static
+    {
+        $this->Masterclass = $Masterclass;
+
+        return $this;
+    }
+
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Nav from './pages/Nav/Nav';
 import Homepage from './pages/Homepage/HomePage';
 import MasterclassList from './pages/Masterclass/MasterclassList';
 import Masterclass from './pages/Masterclass/Masterclass';
@@ -13,6 +12,8 @@ import Instrument from './pages/Instruments/Instrument';
 import InstrumentList from './pages/Instruments/InstrumentList';
 import Footer from './pages/Footer/Footer';
 import Register from './pages/Registration/Register';
+import NoPage from './pages/NoPage';
+import Navbar from './pages/Nav/Navbar';
 // ... import other components
 
 
@@ -20,7 +21,7 @@ function App() {
   return (
     <Router>
       <div className='main-content' >
-        <Nav />
+        <Navbar />
         <div style={{ flex: '1' }}>
           <Switch>
             {/* Define your routes */}
@@ -34,6 +35,7 @@ function App() {
             <Route exact path='/instruments' component={InstrumentList} />
             <Route exact path='/instrument/:id' component={Instrument} />
             <Route exact path='/register' component={Register}/>
+            <Route path='*' component={NoPage}/>
 
             {/* Add other routes for other tables */}
           </Switch>

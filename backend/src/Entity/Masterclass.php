@@ -39,6 +39,7 @@ class Masterclass
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'masterclasses')]
+    #[Groups(['read_composer'])]
     private ?Instrument $Instrument = null;
 
     #[ORM\ManyToMany(targetEntity: MasterclassQuizz::class, inversedBy: 'masterclasses')]

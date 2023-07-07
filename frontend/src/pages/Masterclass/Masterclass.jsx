@@ -38,9 +38,9 @@ const Masterclass = () => {
               </div>
               <div className='w-auto lg:w-1/3'>
                   <h2 className="text-2xl font-bold text-dark_primary_first font-black">Centre de formation</h2>
-                  <div className='flex flex-col'>
-                  <p>{centre_formation.email}</p>  
-                  {/*<MasterclassDetails></MasterclassDetails>*/}       
+                  <div className='flex flex-col text-sm'>
+                    <p className='text-sm'>{centre_formation.email}</p>  
+                    {/*<MasterclassDetails></MasterclassDetails>*/}       
                   </div>     
               </div>
           </div>

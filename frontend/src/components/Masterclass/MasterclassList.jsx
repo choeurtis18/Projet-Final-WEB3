@@ -30,7 +30,7 @@ const MasterclassList = (props) => {
                         className="rounded-lg grid p-4 w-full gap-y-4 shadow-shadow_2">
               <div className="flex flex-col">
                 <h3 className="text-xl font-black">{masterclass.title}</h3>
-                <span className=" text-mid_neutral text-sm">{masterclass.Instrument.name}</span>
+                <span className="text-mid_neutral text-sm">{masterclass.Instrument.name}</span>
               </div>
               <p className="text-sm font-black text-mid_neutral">{masterclass.description.substring(0, 100)}</p>
               <p className="text-sm font-black text-right text-primary_first">En Savoir plus</p>

@@ -75,7 +75,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         //Users
-        $users = Array();
+        $users = [];
         for ($i = 0; $i < 4; $i++) {
             $users[$i] = new User();
             $users[$i]->setEmail($faker->email);
@@ -129,38 +129,52 @@ class AppFixtures extends Fixture
             $composer->setName($faker->name);
             $composer_description = $faker->realText(500);
             $composer->setDescription($composer_description);
-            $manager->persist($composer); 
-
-            // Instruments
-            $instrument = new Instrument();
-            $instrument->setName($faker->word);
-            $manager->persist($instrument);        
+            $manager->persist($composer);       
         }
+        
+        // Instruments
+        $instrument_1 = new Instrument();
+        $instrument_1->setName('piano');
+        $manager->persist($instrument_1);  
+        $instrument_2 = new Instrument();
+        $instrument_2->setName('violon');
+        $manager->persist($instrument_2);  
+        $instrument_3 = new Instrument();
+        $instrument_3->setName('alto');
+        $manager->persist($instrument_3);  
+        $instrument_4 = new Instrument();
+        $instrument_4->setName('flute');
+        $manager->persist($instrument_4);  
+
         $manager->flush();
 
+        $instruments = $manager->getRepository(Instrument::class)->findAll();
+        $totalInstruments = count($instruments);
+
+        $formations = $manager->getRepository(Formation::class)->findAll();
+        $totalFormations = count($formations);
+
+        $composers = $manager->getRepository(Composer::class)->findAll();
+        $totalComposers = count($composers);
+
+        $users_admin = $manager->getRepository(User::class)->getAllAdminUser();
+        $totalUsers_admin= count($users_admin);
+
         for ($i = 1; $i <= 15; $i++) {
+            try {
             //Get Random Instrument
-            $instruments = $manager->getRepository(Instrument::class)->findAll();
-            $totalInstruments = count($instruments);
             $randomInstrumentsIndex = rand(0, $totalInstruments - 1);
             $randomInstrument = $instruments[$randomInstrumentsIndex];
 
             //Get Random Formation
-            $formations = $manager->getRepository(Formation::class)->findAll();
-            $totalFormations = count($formations);
             $randomFormationsIndex = rand(0, $totalFormations - 1);
             $randomFormation = $formations[$randomFormationsIndex];
 
             //Get Random Composer
-            $composers = $manager->getRepository(Composer::class)->findAll();
-            $totalComposers = count($composers);
             $randomComposersIndex = rand(0, $totalComposers - 1);
             $randomComposer  = $composers[$randomComposersIndex];
 
-
             //Get Users
-            $users_admin = $manager->getRepository(User::class)->getAllAdminUser();
-            $totalUsers_admin= count($users_admin);
             $randomUsers_adminIndex = rand(0, $totalUsers_admin - 1);
             $randomUser  = $users_admin[$randomUsers_adminIndex];
 
@@ -170,12 +184,7 @@ class AppFixtures extends Fixture
             $badge->setImage($faker->imageUrl());
             $manager->persist($badge);
 
-            //FunFact
-            $funFact = new FunFact();
-            $funFact->setName($faker->word);
-            $funfact_description = $faker->realText(20);
-            $funFact->setDescription($funfact_description);
-            $manager->persist($funFact);
+            
 
             //  Masterclasses
             $masterclass = new Masterclass();
@@ -190,6 +199,14 @@ class AppFixtures extends Fixture
             $masterclass->setUser($randomUser);
             $manager->persist($masterclass);
 
+            //FunFact
+            $funFact = new FunFact();
+            $funFact->setName($faker->word)
+                ->setMasterclass($masterclass);
+            $funfact_description = $faker->realText(20);
+            $funFact->setDescription($funfact_description);
+            $manager->persist($funFact);
+
 
             //  MasterclassesQuizz
             $masterclassQuizz = new MasterclassQuizz();
@@ -203,8 +220,12 @@ class AppFixtures extends Fixture
             $masterclassQuestion->setProposition(['Bach', 'Mozart', 'Pachelbel', 'Beethoven']);
             $masterclassQuestion->setAnswer($faker->randomElement(['Bach', 'Mozart', 'Pachelbel', 'Beethoven']));
             $manager->persist($masterclassQuestion);
+            $manager->flush();
+            } catch(\Throwable $e) {
+                dump($e);
+            }
         }
 
-        $manager->flush();
+        
     }
 }

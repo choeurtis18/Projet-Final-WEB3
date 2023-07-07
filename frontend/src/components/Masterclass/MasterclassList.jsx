@@ -17,7 +17,7 @@ const MasterclassList = (props) => {
     if (props.input === '') { //if no input the return the original
       return el;
     } else { //return the item which contains the user input
-      return el.title.toLowerCase().includes(props.input)
+      return el.title.toLowerCase().includes(props.input) || el.Instrument.name.toLowerCase().includes(props.input)
     }
   })
   
@@ -28,7 +28,10 @@ const MasterclassList = (props) => {
           filteredData.map((masterclass, index) => (
             <NavLink key={index} to={`/masterclass/${masterclass.id}`}
                         className="rounded-lg grid p-4 w-full gap-y-4 shadow-shadow_2">
-              <h3 className="text-xl font-black">{masterclass.title}</h3>
+              <div className="flex flex-col">
+                <h3 className="text-xl font-black">{masterclass.title}</h3>
+                <span className=" text-mid_neutral text-sm">{masterclass.Instrument.name}</span>
+              </div>
               <p className="text-sm font-black text-mid_neutral">{masterclass.description.substring(0, 100)}</p>
               <p className="text-sm font-black text-right text-primary_first">En Savoir plus</p>
             </NavLink>

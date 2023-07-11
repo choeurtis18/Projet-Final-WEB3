@@ -44,7 +44,7 @@ function App() {
             <Route exact path='/instruments' component={InstrumentList} />
             <Route exact path='/instrument/:id' component={Instrument} />
             <Route exact path='/register' component={Register}/>
-            <Route path='*' component={NoPage}/>
+            {/* <Route path='*' component={NoPage}/> */}
             <Route exact path='/login' component={Login}/>
 
             {/* Add other routes for other tables */}

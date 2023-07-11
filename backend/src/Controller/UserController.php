@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Firebase\JWT\JWT;
 
 class UserController extends AbstractController
 {
@@ -49,6 +50,34 @@ class UserController extends AbstractController
 
         return $this->json([
             'message' => 'New user created'
+        ]);
+    }
+
+    #[Route('/login', name: 'user_login')]
+    public function login(string $appSecret): JsonResponse
+    {
+        /** @var $user ?User */
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $jwt = JWT::encode([
+            'email' => $user->getEmail(),
+            'id' => $user->getId()
+        ],
+            $appSecret,
+            'HS256');
+
+        return $this->json([
+            'message' => 'Welcome ! ',
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+            'jwt' => $jwt
         ]);
     }
 }

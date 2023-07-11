@@ -84,14 +84,14 @@ function Homepage() {
           </div>
 
           <div className="container">
-            <div class="card">
+            <div className="card">
               <img src={prof} alt="" />
-              <div class="card-content">
+              <div className="card-content">
                 <h2>Miriem Fried</h2>
                 <p>CEO & CO-Founder</p>
-                <a href="#" class="button">
+                <a href="#" className="button">
                   En savoir plus
-                  <span class="">
+                  <span className="">
                     <svg
                       aria-hidden="true"
                       className="w-4 h-4 ml-2 -mr-1"
@@ -109,14 +109,14 @@ function Homepage() {
                 </a>
               </div>
             </div>
-            <div class="card">
+            <div className="card">
               <img src={prof} alt="" />
-              <div class="card-content">
+              <div className="card-content">
                 <h2>Miriem Fried</h2>
                 <p>CEO & CO-Founder</p>
-                <a href="#" class="button">
+                <a href="#" className="button">
                   En savoir plus
-                  <span class="">
+                  <span className="">
                     <svg
                       aria-hidden="true"
                       className="w-4 h-4 ml-2 -mr-1"
@@ -134,14 +134,14 @@ function Homepage() {
                 </a>
               </div>
             </div>
-            <div class="card">
+            <div className="card">
               <img src={prof} alt="" />
-              <div class="card-content">
+              <div className="card-content">
                 <h2>Miriem Fried</h2>
                 <p>CEO & CO-Founder</p>
-                <a href="#" class="button">
+                <a href="#" className="button">
                   En savoir plus
-                  <span class="">
+                  <span className="">
                     <svg
                       aria-hidden="true"
                       className="w-4 h-4 ml-2 -mr-1"

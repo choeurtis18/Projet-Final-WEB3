@@ -12,7 +12,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: username
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -21,10 +21,14 @@ security:
             pattern: ^/login$
             lazy: true
             provider: app_user_provider
+            custom_authenticator:
+                - App\Security\JWTAuthenticator
             stateless: true
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator:
+                - App\Security\JWTCheckerAuthenticator
             stateless: true
 
 

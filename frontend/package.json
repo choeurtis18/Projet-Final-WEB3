@@ -13,6 +13,7 @@
     "@fontsource/dm-sans": "^5.0.3",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
+    "esbuild": "^0.18.11",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "prop-types": "^15.8.1",

@@ -40,37 +40,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $Badge;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
-    #[Groups(['read_composer'])]
-    private Collection $Event;
+    private Collection $event;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
-    #[Groups(['read_composer'])]
     private Collection $Formation;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Masterclass::class)]
-    #[Groups(['read_composer'])]
     private Collection $Masterclass;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Classroom::class)]
-    #[Groups(['read_composer'])]
     private Collection $classroom;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: FormationLvl::class)]
-    #[Groups(['read_composer'])]
     private Collection $formationLvl;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassLvl::class)]
-    #[Groups(['read_composer'])]
     private Collection $MasterclassLvl;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: MasterclassQuizz::class)]
-    #[Groups(['read_composer'])]
     private Collection $MasterclassQuizz;
 
     public function __construct()
     {
-        $this->Badge = new ArrayCollection();
-        $this->Event = new ArrayCollection();
+        $this->badge = new ArrayCollection();
+        $this->event = new ArrayCollection();
         $this->Formation = new ArrayCollection();
         $this->Masterclass = new ArrayCollection();
         $this->classroom = new ArrayCollection();
@@ -181,19 +174,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->event;
     }
 
-    public function addEvent(Event $Event): self
+    public function addEvent(Event $event): self
     {
-        if (!$this->Event->contains($Event)) {
-            $this->Event->add($Event);
+        if (!$this->event->contains($event)) {
+            $this->event->add($event);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $Event): self
+    public function removeEvent(Event $event): self
 
     {
-        $this->Event->removeElement($Event);
+        $this->event->removeElement($event);
 
         return $this;
     }

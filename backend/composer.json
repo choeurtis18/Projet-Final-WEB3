@@ -10,7 +10,11 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.15",
+<<<<<<< HEAD
         "firebase/php-jwt": "^6.8",
+=======
+        "fzaninotto/faker": "^1.5",
+>>>>>>> e97a1bf625ef807a94e2f3bb8001bee8cd2a1f26
         "nelmio/cors-bundle": "^2.3",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "6.3.*",
@@ -79,7 +83,6 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "fzaninotto/faker": "^1.5",
         "symfony/debug-bundle": "6.3.*",
         "symfony/maker-bundle": "^1.49",
         "symfony/stopwatch": "6.3.*",

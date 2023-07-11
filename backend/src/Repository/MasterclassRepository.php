@@ -56,4 +56,13 @@ class MasterclassRepository extends ServiceEntityRepository
         
         return $return;
     }
+
+    public function findMasterclassByCentreDeFormation($id) {
+        $return =  $this->createQueryBuilder('masterclass')
+            ->andWhere('masterclass.user = '. $id)
+            ->getQuery()
+            ->getResult();
+        
+        return $return;
+    }
 }

@@ -11,5 +11,11 @@
 <div class="example-wrapper">
     <a href="{{ path('app_masterclass_list_show') }}">liste des masterclass</a>
     <h1>{{ masterclass.getTitle() }}</h1>
+
+    <a href="{{ path('funfact_new', {'id':masterclass.id}) }}">Ajouter une funfact</a>
+    {% if masterclass.getFunfact() %}
+    <h3>{{ masterclass.getFunfact().getName() }}</h3>
+    <p>{{ masterclass.getFunfact().getDescription() }}</p>
+    {% endif %}
 </div>
 {% endblock %}

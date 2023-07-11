@@ -37,10 +37,8 @@ const Login = () => {
       });
 
       const  token  = response.data.jwt;
+      dispatch(LoginAction(token, response.data.id, response.data.email, response.data.roles, types.LOGIN_SUCCESS ))
       document.cookie = `token=${token}`
-      
-
-      dispatch(LoginAction(response.data.jwt, response.data.id, response.data.email, response.data.roles, types.LOGIN_SUCCESS ))
       history.push('/');
 
     } catch (error) {

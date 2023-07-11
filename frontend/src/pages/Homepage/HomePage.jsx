@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import MasterclassQuizz from "../MasterclassDetails/MasterclassDetails";
-import Nav from "../Nav/Nav";
 import "./Homepage.css";
 import prof from "../../assets/prof.png";
 
@@ -36,8 +34,8 @@ function Homepage() {
         </div>
 
         <div className="container-cards container">
-          {masterclasses.map((masterclass) => (
-            <div className="max-w-sm p-6  border rounded-lg shadow card-homepage ">
+          {masterclasses.map((masterclass, index) => (
+            <div key={index} className="max-w-sm p-6  border rounded-lg shadow card-homepage ">
               <div className="card-header">
                 <img src="https://placehold.co/46" alt="" />
                 <a href="#">

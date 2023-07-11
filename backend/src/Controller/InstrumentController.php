@@ -3,25 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Instrument;
-use App\Entity\Masterclass;
 use App\Repository\InstrumentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 
 
 class InstrumentController extends AbstractController
 {
     #[Route('/instruments', name: 'app_instruments_show')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(InstrumentRepository $instrumentRepository): Response
     {
-        $instruments = $doctrine->getRepository(Instrument::class)->findAll();
+        $instruments = $instrumentRepository->findAll();
 
         try {
             return $this->json([
@@ -89,10 +85,10 @@ class InstrumentController extends AbstractController
     }
 
     #[Route('/instrument/{id}', name: 'app_instrument_show')]
-    public function show(ManagerRegistry $doctrine, int $id): Response
+    public function show(InstrumentRepository $instrumentRepository, int $id): Response
     {
-        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
-        
+        $instrument = $instrumentRepository->findOneBy(['id' => $id]);
+
         try {
             return $this->json([
                 'instrument' => $instrument,

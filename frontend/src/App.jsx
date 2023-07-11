@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Homepage from './pages/Homepage/HomePage';
@@ -12,12 +13,20 @@ import Instrument from './pages/Instruments/Instrument';
 import InstrumentList from './pages/Instruments/InstrumentList';
 import Footer from './pages/Footer/Footer';
 import Register from './pages/Registration/Register';
+import Login from './pages/Login/Login';
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
+import { RootReducer } from './Reducer/RootReducer' 
 import NoPage from './pages/NoPage';
 import Navbar from './pages/Nav/Navbar';
 // ... import other components
 
 
 function App() {
+
+  const userData = useSelector(state => state.login);
+
+  console.log(userData);
+  
   return (
     <Router>
       <div className='main-content' >
@@ -36,13 +45,13 @@ function App() {
             <Route exact path='/instrument/:id' component={Instrument} />
             <Route exact path='/register' component={Register}/>
             <Route path='*' component={NoPage}/>
+            <Route exact path='/login' component={Login}/>
 
             {/* Add other routes for other tables */}
           </Switch>
         </div>
         <Footer />
       </div>
-
     </Router>
   );
 }

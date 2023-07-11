@@ -17,7 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Firebase\JWT\JWT;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -93,5 +95,33 @@ class UserController extends AbstractController
                 'error' => "formation not found"
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    #[Route('/login', name: 'user_login')]
+    public function login(string $appSecret): JsonResponse
+    {
+        /** @var $user ?User */
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $jwt = JWT::encode([
+            'email' => $user->getEmail(),
+            'id' => $user->getId()
+        ],
+            $appSecret,
+            'HS256');
+
+        return $this->json([
+            'message' => 'Welcome ! ',
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+            'jwt' => $jwt
+        ]);
     }
 }

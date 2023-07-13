@@ -24,8 +24,7 @@ const Masterclass = () => {
         })
     }, [id]);
 
-    console.log(masterclass);
-  return (
+    return (
       <div className="w-full px-4 lg:px-16 md:px-16">
         <NavLink to={`/masterclasses`}
                     className="">

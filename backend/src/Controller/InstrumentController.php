@@ -33,55 +33,35 @@ class InstrumentController extends AbstractController
     #[Route('/create_instrument', name: 'app_create_instrument')]
     public function create_instrument(Request $request, EntityManagerInterface $entityManagerInterface,
                                     InstrumentRepository $instrumentRepository) { 
-        $instrument = new Instrument();
         $current_user = $this->getUser();
-        $name = $request->request->get('name');
+
+        $data = json_decode($request->getContent(), true);
+        $name = $data['name'];
 
         try {
-            $instrument = new Instrument();
-            $instrument->setName($name);
+            if (!$instrumentRepository->findOneBy(['name' => $name])) {
+                $instrument = new Instrument();
+                $instrument->setName($name);
 
-            $instrumentRepository->save($instrument, true);
+                $instrumentRepository->save($instrument, true);
 
-            return $this->json([
-                'status' => 1,
-                'message' => "New Instrument Add"
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);;
+                return $this->json([
+                    'status' => 1,
+                    'message' => "New Instrument Add"
+                ], Response::HTTP_OK);;                
+            } else {
+                return $this->json([
+                    'status' => 0,
+                    'message' => "Instrument déjà existant"
+                ], Response::HTTP_OK);;     
+            }
+
         } catch (\Exception $exception) {
             return $this->json([
                 'status' => 0,
                 'error' => "error durring add instrument"
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        /*
-        $form = $this->createFormBuilder($instrument)
-        ->add("name", TextType::class,[
-            "label"=> "Nom",
-            "attr"=>[
-                'placeholder' => 'Piano'
-            ]
-        ])
-        ->add('save', SubmitType::class, [
-            'label' => 'Submit'
-        ])
-        ->getForm();
-    
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            $entityManagerInterface->persist($instrument);
-            $entityManagerInterface->flush();
-
-            return $this->redirectToRoute('app_instrument_show', [
-                'id' => $instrument->getId(),
-            ]);
-        }
-
-        return $this->render('instrument/create_instrument.html.twig', [
-            "form" => $form
-        ]);
-        */
     }
 
     #[Route('/instrument/{id}', name: 'app_instrument_show')]

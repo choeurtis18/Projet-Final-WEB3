@@ -39,62 +39,36 @@ class ComposerController extends AbstractController
     public function create_composer(Request $request, ManagerRegistry $doctrine, 
                                     ComposerRepository $composerRepository) { 
         $current_user = $this->getUser();
-        $name = $request->request->get('name');
-        $description = $request->request->get('description');
+
+        $data = json_decode($request->getContent(), true);
+        $name = $data['name'];
+        $description = $data['description'];
 
         try {
-            $composer = new Composer();
-            $composer->setName($name)
-                ->setDescription($description);
+            if (!$composerRepository->findOneBy(['name' => $name])) {
+                $composer = new Composer();
+                $composer->setName($name);
+                $composer->setDescription($description);
 
-            $composerRepository->save($composer, true);
+                $composerRepository->save($composer, true);
 
-            return $this->json([
-                'status' => 1,
-                'message' => "New Composer Add"
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);;
+                return $this->json([
+                    'status' => 1,
+                    'message' => "New Composer Add"
+                ], Response::HTTP_OK);;                
+            } else {
+                return $this->json([
+                    'status' => 0,
+                    'message' => "Composer déjà existant"
+                ], Response::HTTP_OK);;     
+            }
+
         } catch (\Exception $exception) {
             return $this->json([
                 'status' => 0,
                 'error' => "error durring add composer"
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        
-        /*
-        $form = $this->createFormBuilder($composer)
-        ->add("name", TextType::class,[
-            "label"=> "Nom",
-            "attr"=>[
-                'placeholder' => 'Ludwig Van Beethoven'
-            ]
-        ])
-        ->add("description", TextType::class,[
-            "label"=> "Descriprion",
-            "attr"=>[
-                'placeholder' => "Ludwig van Beethoven est un compositeur, pianiste et chef d'orchestre allemand, né à Bonn le 15 ou le 16 décembre 1770 et mort à Vienne le 26 mars 1827 à 56 ans."
-            ]
-        ])
-        ->add('save', SubmitType::class, [
-            'label' => 'Submit'
-        ])
-        ->getForm();
-    
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            $entityManagerInterface->persist($composer);
-            $entityManagerInterface->flush();
-
-            return $this->redirectToRoute('app_composer_show', [
-                'id' => $composer->getId(),
-            ]);
-        }
-
-        return $this->render('composer/create_composer.html.twig', [
-            "form" => $form
-        ]);
-
-        */
     }
 
     #[Route('/composer/{id}', name: 'app_composer_show')]

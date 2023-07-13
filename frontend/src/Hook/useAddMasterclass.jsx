@@ -1,18 +1,24 @@
-export default function useAddMasterclass() {
-    //const credentials = btoa(`${loggedUser.username}:${loggedUser.password}`);
+import useGetCoockie from "./useGetCoockie";
 
-    return function (MasterclassName) {
-        return fetch(`http://localhost:8245/create_Masterclass`, {
+export default function useAddMasterclass() {
+    const credentials = useGetCoockie("token");
+
+    return function (masterclassTitle, masterclassDescription, masterclassCertification,
+                    masterclassInstrument, masterclassComposer) {
+
+        return fetch(`http://localhost:8245/create_masterclass`, {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
-            /*
             headers: {
-                'Authorization': `Basic ${credentials}`
+                'Authorization': `Bearer ${credentials}`
             },
-            */
             body: JSON.stringify({
-                name: MasterclassName,
+                title: masterclassTitle,
+                description: masterclassDescription,
+                certification: masterclassCertification,
+                instrument: masterclassInstrument,
+                composer: masterclassComposer,
            })
         })
             .then(res => res.json())

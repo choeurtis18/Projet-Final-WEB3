@@ -21,6 +21,8 @@ import Navbar from './pages/Nav/Navbar';
 import AddInstrument from './pages/Instruments/AddInstrument';
 import AddComposer from './pages/Composers/AddComposer';
 import AddMasterclass from './pages/Masterclass/AddMasterclass';
+import UpdateInstrument from './components/Instrument/UpdateInstrument';
+import UpdateComposer from './components/Composer/UpdateComposer';
 // ... import other components
 
 
@@ -44,9 +46,11 @@ function App() {
             <Route exact path='/composers' component={ComposerList} />
             <Route exact path='/composer/:id' component={Composer} />
             <Route exact path='/add_composer' component={AddComposer}/>
+            <Route exact path='/update_composer/:id' component={UpdateComposer}/>
             <Route exact path='/instruments' component={InstrumentList} />
             <Route exact path='/instrument/:id' component={Instrument} />
             <Route exact path='/add_instrument' component={AddInstrument}/>
+            <Route exact path='/update_instrument/:id' component={UpdateInstrument}/>
             <Route exact path='/register' component={Register}/>
             {/* <Route path='*' component={NoPage}/> */}
             <Route exact path='/login' component={Login}/>

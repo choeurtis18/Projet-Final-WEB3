@@ -22,7 +22,6 @@ const MasterclassList = () => {
                 </div>
             </div>
             <Get_MasterclassList input={inputText}></Get_MasterclassList>
-            <AddMasterclass></AddMasterclass>
         </div>
     );
 };

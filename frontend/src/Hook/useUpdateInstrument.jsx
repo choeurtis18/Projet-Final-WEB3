@@ -1,20 +1,19 @@
 import useGetCoockie from "./useGetCoockie";
 
-export default function useAddComposer() {
+export default function useUpdateInstrument() {
     const credentials = useGetCoockie("token");
     
-    return function (composerName, composerDescription) {
-        return fetch(`http://localhost:8245/composer`, {
-            method: 'POST',
+    return function (instrumentName, id) {
+        return fetch(`http://localhost:8245/instrument/${id}`, {
+            method: 'PATCH',
             credentials: 'include',
             mode: 'cors',
             headers: {
                 'Authorization': `Bearer ${credentials}`
             },
             body: JSON.stringify({
-                name: composerName,
-                description: composerDescription,
-            })
+                name: instrumentName,
+           })
         }).then(data => data.json())
     }
 }

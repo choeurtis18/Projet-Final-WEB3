@@ -1,13 +1,12 @@
 import useGetCoockie from "./useGetCoockie";
 
-export default function useAddMasterclass() {
+export default function useUpdateMasterclass() {
     const credentials = useGetCoockie("token");
-
+    
     return function (masterclassTitle, masterclassDescription, masterclassCertification,
-                    masterclassInstrument, masterclassComposer) {
-
-        return fetch(`http://localhost:8245/masterclass`, {
-            method: 'POST',
+        masterclassInstrument, masterclassComposer, id) {
+        return fetch(`http://localhost:8245/masterclass/${id}`, {
+            method: 'PATCH',
             credentials: 'include',
             mode: 'cors',
             headers: {
@@ -19,8 +18,7 @@ export default function useAddMasterclass() {
                 certification: masterclassCertification,
                 instrument: masterclassInstrument,
                 composer: masterclassComposer,
-           })
-        })
-            .then(res => res.json())
+            })
+        }).then(data => data.json())
     }
 }

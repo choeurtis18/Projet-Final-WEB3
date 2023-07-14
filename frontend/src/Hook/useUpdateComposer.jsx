@@ -1,11 +1,11 @@
 import useGetCoockie from "./useGetCoockie";
 
-export default function useAddComposer() {
+export default function useUpdateComposer() {
     const credentials = useGetCoockie("token");
     
-    return function (composerName, composerDescription) {
-        return fetch(`http://localhost:8245/composer`, {
-            method: 'POST',
+    return function (composerName, composerDescription, id) {
+        return fetch(`http://localhost:8245/composer/${id}`, {
+            method: 'PATCH',
             credentials: 'include',
             mode: 'cors',
             headers: {

@@ -8,6 +8,7 @@ use App\Entity\Masterclass;
 use App\Repository\ComposerRepository;
 use App\Repository\InstrumentRepository;
 use App\Repository\MasterclassRepository;
+use App\Repository\FunFactRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class MasterclassController extends AbstractController
 {
-    #[Route('/masterclasses', name: 'app_masterclass_list_show')]
+    #[Route('/masterclass', name: 'app_masterclass_list_show', methods: ['GET'])]
     public function index(MasterclassRepository $masterclassRepository): Response
     {
         $masterclasses = $masterclassRepository->findAll();
@@ -38,13 +39,12 @@ class MasterclassController extends AbstractController
         }
     }
 
-    #[Route('/create_masterclass', name: 'app_create_masterclass')]
+    #[Route('/masterclass', name: 'app_create_masterclass', methods: ['POST'])]
     public function create_masterclass(Request $request, MasterclassRepository $masterclassRepository, 
                                             ComposerRepository $composerRepository, ManagerRegistry $doctrine, 
                                             InstrumentRepository $instrumentRepository) { 
         $current_user = $this->getUser();
         
-        //var_dump($current_user);
         $data = json_decode($request->getContent(), true);
         $instrument = $instrumentRepository->findOneBy(['id' => $data['instrument']]);
         $composer = $composerRepository->findOneBy(['id' => $data['composer']]);
@@ -85,7 +85,84 @@ class MasterclassController extends AbstractController
         }
     }
 
-    #[Route('/masterclass/{id}', name: 'app_masterclass_show')]
+    #[Route('/masterclass/{id}', name: 'app_delete_masterclass', methods: ['DELETE'])]
+    public function delete_masterclass(UserRepository $userRepository, int $id, 
+                                        FunFactRepository $funFactRepository, EntityManagerInterface $em) { 
+        $current_user = $this->getUser();
+        $admins = $userRepository->getAllAdminUser();
+
+        try {
+            if (in_array($current_user, $admins)) {
+
+                $masterclass = $em->getReference(Masterclass::class, $id);
+                $funfact = $funFactRepository->findOneBy(['Masterclass' => $masterclass]);
+                $em->remove($funfact);
+                $em->remove($masterclass);
+                $em->flush();
+
+                return $this->json([
+                    'status' => 1,
+                    'message' => "Masterclass Delete"
+                ], Response::HTTP_OK);;                
+            } else {
+                return $this->json([
+                    'status' => 0,
+                    'message' => "Vous n'est pas autorisé à être ici "
+                ], Response::HTTP_OK);;     
+            }
+
+        } catch (\Exception $exception) {
+            return $this->json([
+                'status' => 0,
+                'error' => "error durring remove masterclass".$exception
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route('/masterclass/{id}', name: 'app_update_masterclass', methods: ['PATCH'])]
+    public function update_masterclass(Request $request, EntityManagerInterface $em, int $id,
+                                        ComposerRepository $composerRepository, InstrumentRepository $instrumentRepository, 
+                                        UserRepository $userRepository) { 
+        $current_user = $this->getUser();
+        $admins = $userRepository->getAllAdminUser();
+
+        $data = json_decode($request->getContent(), true);
+        $instrument = $instrumentRepository->findOneBy(['id' => $data['instrument']]);
+        $composer = $composerRepository->findOneBy(['id' => $data['composer']]);
+        $title = $data['title'];
+        $certification = $data['certification'];
+        $description = $data['description'];
+
+        try {
+            if (in_array($current_user, $admins)) {
+                $masterclass = $em->getReference(Masterclass::class, $id);
+                $masterclass->setInstrument($instrument);
+                $masterclass->setComposer($composer);
+                $masterclass->setTitle($title);
+                $masterclass->setCertification($certification);
+                $masterclass->setDescription($description);
+                $em->flush();
+
+                return $this->json([
+                    'status' => 1,
+                    'message' => "Masterclass Update"
+                ], Response::HTTP_OK);;                
+            } else {
+                return $this->json([
+                    'status' => 0,
+                    'message' => "Vous n'est pas autorisé à être ici "
+                ], Response::HTTP_OK);;     
+            }
+
+        } catch (\Exception $exception) {
+            return $this->json([
+                'status' => 0,
+                'error' => "error durring update masterclass"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route('/masterclass/{id}', name: 'app_masterclass_show', methods: ['GET'])]
     public function show(MasterclassRepository $masterclassRepository, int $id): Response
     {
         $masterclass = $masterclassRepository->findOneBy(['id' => $id]);

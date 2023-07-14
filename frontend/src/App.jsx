@@ -23,6 +23,7 @@ import AddComposer from './pages/Composers/AddComposer';
 import AddMasterclass from './pages/Masterclass/AddMasterclass';
 import UpdateInstrument from './components/Instrument/UpdateInstrument';
 import UpdateComposer from './components/Composer/UpdateComposer';
+import UpdateMasterclass from './components/Masterclass/UpdateMasterclass';
 // ... import other components
 
 
@@ -43,6 +44,7 @@ function App() {
             <Route exact path="/masterclasses/:id" component={MasterclassDetails} />
             <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
             <Route exact path='/add_masterclass' component={AddMasterclass}/>
+            <Route exact path='/update_masterclass/:id' component={UpdateMasterclass}/>
             <Route exact path='/composers' component={ComposerList} />
             <Route exact path='/composer/:id' component={Composer} />
             <Route exact path='/add_composer' component={AddComposer}/>

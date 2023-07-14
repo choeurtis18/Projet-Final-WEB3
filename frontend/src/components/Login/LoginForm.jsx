@@ -37,8 +37,8 @@ const Login = () => {
       });
 
       const  token  = response.data.jwt;
-      dispatch(LoginAction(token, response.data.id, response.data.email, response.data.roles, types.LOGIN_SUCCESS ))
       document.cookie = `token=${token}`
+      dispatch(LoginAction(token, response.data.id, types.LOGIN_SUCCESS ))
       history.push('/');
 
     } catch (error) {
@@ -49,19 +49,24 @@ const Login = () => {
 
   return (
     <div>
-      <h2>Login</h2>
-      <div>
-        <label>Email:</label>
-        <input type="text" value={email} onChange={handleEmailChange} />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" value={password} onChange={handlePasswordChange} />
-      </div>
-      <div>
-        <button onClick={handleLogin}>Login</button>
-      </div>
-      {errorMessage && <div>{errorMessage}</div>}
+      <form className="space-y-6">
+        <div>
+          <label className='block text-sm font-medium leading-6 text-gray-900'>Email:</label>
+          <div className='mt-1'>
+            <input type="text" value={email} onChange={handleEmailChange} className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+          </div>
+        </div>
+        <div>
+          <label className='block text-sm font-medium leading-6 text-gray-900'>Password:</label>
+          <div className='mt-1'>
+            <input type="password" value={password} onChange={handlePasswordChange} className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+          </div>
+        </div>
+        <div>
+          <button onClick={handleLogin} className='flex w-full justify-center rounded-md bg-secondary  px-3 py-1.5 text-sm font-semibold shadow-sm'>Login</button>
+        </div>
+        {errorMessage && <div>{errorMessage}</div>}
+      </form>
     </div>
   );
 };

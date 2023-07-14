@@ -1,8 +1,6 @@
 const initialState = {
     jwt: null,
     id: null,
-    email: '',
-    roles: [],
     isLoggedIn: false
 };
   
@@ -13,8 +11,6 @@ export default function LoginReducer(state = initialState, action) {
           ...state,
           jwt: action.jwt,
           id: action.id,
-          email: action.email,
-          roles: action.roles,
           isLoggedIn: true
         };
       case 'LOGOUT':
@@ -22,8 +18,6 @@ export default function LoginReducer(state = initialState, action) {
           ...state,
           jwt: null,
           id: null,
-          email: '',
-          roles: [],
           isLoggedIn: false
         };
       default:

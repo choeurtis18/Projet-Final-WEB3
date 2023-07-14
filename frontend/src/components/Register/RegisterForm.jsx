@@ -6,7 +6,8 @@ import axios from 'axios';
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [roles, setRole] = useState('ROLE_USER'); // Valeur par défaut du rôle
+  const [roles, setRole] = useState('ROLE_USER'); 
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +18,7 @@ const RegisterForm = () => {
         password: password,
         roles: [roles],
       });
-      console.log(response.data); 
+      history.push('/login');
     } catch (error) {
       console.error(error);
     }

@@ -37,19 +37,24 @@ const Login = () => {
       });
 
       const  token  = response.data.jwt;
+      const  roles  = response.data.roles;
+  
       document.cookie = `token=${token}`
-      dispatch(LoginAction(token, response.data.id, types.LOGIN_SUCCESS ))
+      document.cookie = `roles=${roles}`
+      
+      //dispatch(LoginAction(token, response.data.id, types.LOGIN_SUCCESS ))
       history.push('/');
+      console.log("ouais ouais login");
 
     } catch (error) {
-      dispatch({ type: types.LOGIN_FAILURE, payload: error.response.data.message });
+      dispatch({ type: types.LOGIN_FAILURE});
       setErrorMessage(error.response.data.message);
     }
   };
 
   return (
     <div>
-      <form className="space-y-6">
+      <div className="space-y-6">
         <div>
           <label className='block text-sm font-medium leading-6 text-gray-900'>Email:</label>
           <div className='mt-1'>
@@ -63,10 +68,10 @@ const Login = () => {
           </div>
         </div>
         <div>
-          <button onClick={handleLogin} className='flex w-full justify-center rounded-md bg-secondary  px-3 py-1.5 text-sm font-semibold shadow-sm'>Login</button>
+          <button onClick={handleLogin} className='flex w-full justify-center rounded-md bg-secondary text-white px-3 py-1.5 text-sm font-semibold shadow-sm'>Login</button>
         </div>
         {errorMessage && <div>{errorMessage}</div>}
-      </form>
+      </div>
     </div>
   );
 };

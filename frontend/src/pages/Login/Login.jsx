@@ -27,10 +27,9 @@ export default function Login() {
           </div>
         </div>
         <div className="relative hidden w-0 flex-1 lg:block">
-          <img className="absolute inset-0 h-screen w-full object-cover" src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80" alt=""/>
+          <img className="absolute inset-0 h-screen w-full object-cover" src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGluc3RydW1lbnR8ZW58MHwwfDB8fHww&auto=format&fit=crop&w=500&q=60" alt=""/>
         </div>
       </div>
-
     </div>
   )
 }

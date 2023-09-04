@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [roles, setRole] = useState('ROLE_USER'); 
+  const [roles, setRole] = useState('user'); 
   const history = useHistory();
 
   const handleSubmit = async (e) => {
@@ -44,9 +44,9 @@ const RegisterForm = () => {
           <label className='block text-sm font-medium leading-6 text-gray-900'>Email:</label>
           <div className='mt-1'>
             <select value={roles} onChange={(e) => setRole(e.target.value)} className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              <option value="ROLE_PROFESSOR">Professeur</option>
-              <option value="ROLE_STUDENT">Etudiant</option>
-              <option value="ROLE_USER">Utilisateur</option>
+              <option value="professor">Professeur</option>
+              <option value="student">Etudiant</option>
+              <option value="user">Utilisateur</option>
             </select>
           </div>
       </div>

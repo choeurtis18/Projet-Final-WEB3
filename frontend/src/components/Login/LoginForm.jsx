@@ -37,15 +37,11 @@ const Login = () => {
       });
 
       const  token  = response.data.jwt;
-      const  roles  = response.data.roles;
-  
+        
       document.cookie = `token=${token}`
-      document.cookie = `roles=${roles}`
       
       //dispatch(LoginAction(token, response.data.id, types.LOGIN_SUCCESS ))
       history.push('/');
-      console.log("ouais ouais login");
-
     } catch (error) {
       dispatch({ type: types.LOGIN_FAILURE});
       setErrorMessage(error.response.data.message);

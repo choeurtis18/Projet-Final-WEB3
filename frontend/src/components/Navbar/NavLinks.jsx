@@ -11,6 +11,7 @@ export default function NavLinks() {
         </NavLink>
         <NavLink to={`/events`} className="w-full">
             Events
+        </NavLink>
         <NavLink to={`/login`} className="w-full">
             Se connecter
         </NavLink>

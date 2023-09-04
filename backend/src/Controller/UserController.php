@@ -72,7 +72,6 @@ class UserController extends AbstractController
     {
         $users = $userRepository->getAllAdminUser();
 
-        var_dump($users);
         try {
             return $this->json([
                 'users' => $users

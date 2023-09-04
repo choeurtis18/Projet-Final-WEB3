@@ -1,19 +1,16 @@
 import useGetCoockie from "./useGetCoockie";
 
-export default function useAddInstrument() {
+export default function useDeleteMasterclass() {
     const credentials = useGetCoockie("token");
     
-    return function (instrumentName) {
-        return fetch(`http://localhost:8245/instrument`, {
-            method: 'POST',
+    return function (id) {
+        return fetch(`http://localhost:8245/masterclass/${id}`, {
+            method: 'DELETE',
             credentials: 'include',
             mode: 'cors',
             headers: {
                 'Authorization': `Bearer ${credentials}`
-            },
-            body: JSON.stringify({
-                name: instrumentName,
-           })
+            }
         }).then(data => data.json())
     }
 }

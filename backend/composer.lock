@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9af64a9e16ac55c4cb2d57a88efd6d1",
+    "content-hash": "020b1582f3f566d927ba8745cb5266e0",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1396,7 +1396,6 @@
             "time": "2022-05-23T21:33:49+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "firebase/php-jwt",
             "version": "v6.8.0",
             "source": {
@@ -1460,12 +1459,8 @@
             "time": "2023-06-20T16:45:35+00:00"
         },
         {
-            "name": "monolog/monolog",
-            "version": "3.3.1",
-=======
             "name": "fzaninotto/faker",
             "version": "v1.5.0",
->>>>>>> e97a1bf625ef807a94e2f3bb8001bee8cd2a1f26
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
@@ -6319,16 +6314,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.49.0",
+            "version": "v1.50.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "ce1d424f76bbb377f1956cc7641e8e2eafe81cde"
+                "reference": "a1733f849b999460c308e66f6392fb09b621fa86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/ce1d424f76bbb377f1956cc7641e8e2eafe81cde",
-                "reference": "ce1d424f76bbb377f1956cc7641e8e2eafe81cde",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/a1733f849b999460c308e66f6392fb09b621fa86",
+                "reference": "a1733f849b999460c308e66f6392fb09b621fa86",
                 "shasum": ""
             },
             "require": {
@@ -6386,13 +6381,14 @@
             "homepage": "https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html",
             "keywords": [
                 "code generator",
+                "dev",
                 "generator",
                 "scaffold",
                 "scaffolding"
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.49.0"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.50.0"
             },
             "funding": [
                 {
@@ -6408,7 +6404,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-07T13:10:14+00:00"
+            "time": "2023-07-10T18:21:57+00:00"
         },
         {
             "name": "symfony/process",

@@ -8,4 +8,4 @@ export default function AddEvent() {
             <UseUpdateEvent></UseUpdateEvent>
         </div>
     );
-};
+}; 

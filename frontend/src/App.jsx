@@ -23,7 +23,7 @@ import AddMasterclass from './pages/Masterclass/AddMasterclass';
 import UpdateInstrument from './components/Instrument/UpdateInstrument';
 import UpdateComposer from './components/Composer/UpdateComposer';
 import UpdateMasterclass from './components/Masterclass/UpdateMasterclass';
-import UpdateEvent from './components/Event/UpdateEvent';
+import UpdateEvent from './components/Event/updateEvent';
 import EventList from './pages/Event/EventList';
 import EventDetails from './pages/Event/Event';
 import AddEvent from './pages/Event/AddEvent';

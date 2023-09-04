@@ -9,6 +9,12 @@ export default function NavLinks() {
         <NavLink to={`/masterclasses`} className="w-full">
             Masterclass
         </NavLink>
+        <NavLink to={`/login`} className="w-full">
+            Se connecter
+        </NavLink>
+        <NavLink to={`/register`} className="w-full">
+            S'inscrire
+        </NavLink>
       </div>
     );
 };

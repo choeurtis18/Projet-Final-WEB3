@@ -11,6 +11,11 @@ export default function NavLinks() {
         </NavLink>
         <NavLink to={`/events`} className="w-full">
             Events
+        <NavLink to={`/login`} className="w-full">
+            Se connecter
+        </NavLink>
+        <NavLink to={`/register`} className="w-full">
+            S'inscrire
         </NavLink>
       </div>
     );

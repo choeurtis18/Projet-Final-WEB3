@@ -14,7 +14,6 @@ import InstrumentList from './pages/Instruments/InstrumentList';
 import Footer from './pages/Footer/Footer';
 import Register from './pages/Registration/Register';
 import Login from './pages/Login/Login';
-import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import { RootReducer } from './Reducer/RootReducer' 
 import NoPage from './pages/NoPage';
 import Navbar from './pages/Nav/Navbar';
@@ -30,15 +29,21 @@ import EventDetails from './pages/Event/Event';
 import AddEvent from './pages/Event/AddEvent';
 // ... import other components
 
-
 function App() {
 
   const userData = useSelector(state => state.login);
-
+  
   return (
     <Router>
       <div className='main-content' >
-        <Navbar />
+      <Route
+        render={({ location }) => {
+          const { pathname } = location;
+          const shouldShowNavbar = !(pathname === '/login' || pathname === '/register');
+
+          return shouldShowNavbar ? <Navbar /> : null;
+        }}
+      />
         <div style={{ flex: '1' }}>
           <Switch>
             {/* Define your routes */}
@@ -69,7 +74,14 @@ function App() {
             {/* Add other routes for other tables */}
           </Switch>
         </div>
-        <Footer />
+        <Route
+        render={({ location }) => {
+          const { pathname } = location;
+          const shouldShowNavbar = !(pathname === '/login' || pathname === '/register');
+
+          return shouldShowNavbar ? <Footer /> : null;
+        }}
+      />
       </div>
     </Router>
   );

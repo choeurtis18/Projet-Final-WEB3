@@ -36,10 +36,16 @@ class UserController extends AbstractController
             ], 409);
         }
 
-        if (!is_array($data['roles'])) {
-            return $this->json([
-                'error' => 'Le format du rôle est incorrect.'
-            ], 400);
+
+        $roles = $data['roles'];
+        $allowedRoles = ['professor', 'student', 'user'];
+        
+        foreach ($roles as $role) {
+            if (!in_array($role, $allowedRoles, true)) {
+                return $this->json([
+                    'error' => 'Le format du rôle est incorrect.'
+                ], 400);
+            }
         }
 
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {

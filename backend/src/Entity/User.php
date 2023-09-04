@@ -8,8 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -35,9 +35,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['read_composer'])]
     private ?string $password = null;
 
+    /**
+     * @var int The amount of xp
+     */
+    #[Assert\Range(
+        min: 0,
+        max: 1500,
+        notInRangeMessage : 'XP should be between {{ min }} and {{ max }}.',
+    )]
+    #[ORM\Column(type: 'integer')]
+    private int $xp = 0;
+
     #[ORM\ManyToMany(targetEntity: Badge::class, inversedBy: 'users')]
     #[Groups(['read_composer'])]
-    private Collection $Badge;
+    private Collection $badge;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'users')]
     private Collection $event;
@@ -147,21 +158,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getBadge(): Collection
     {
-        return $this->Badge;
+        return $this->badge;
     }
 
     public function addBadge(Badge $badge): self
-    {
-        if (!$this->Badge->contains($badge)) {
-            $this->Badge->add($badge);
-        }
-
-        return $this;
+{
+    if (!$this->badge->contains($badge)) {
+        $this->badge->add($badge);
     }
+
+    return $this;
+}
+
 
     public function removeBadge(Badge $badge): self
     {
-        $this->Badge->removeElement($badge);
+        $this->badge->removeElement($badge);
 
         return $this;
     }
@@ -341,8 +353,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getXp(): int
+    {
+        return $this->xp;
+    }
 
-    
+    public function setXp(int $xp): self
+    {
+        $this->xp = $xp;
 
-    
+        return $this;
+    }
 }

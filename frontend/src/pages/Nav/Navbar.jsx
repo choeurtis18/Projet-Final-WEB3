@@ -1,13 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import logo from "../../assets/logo.svg";
 import user_icon from "../../assets/user-information-290.svg";
+import xp from "../../assets/xp.svg";
 import NavLinks from '../../components/Navbar/NavLinks';
+import useGetXpUser from "../../Hook/useGetXpUser";
 
 
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [userXp, setUserXp] = useState(0);
+  const [error, setError] = useState(null);
+  
+  const fetchUserXp = useGetXpUser();
+
+  useEffect(() => {
+    async function loadUserXp() {
+      try {
+        const data = await fetchUserXp();
+        if (data && data.xp) {
+            setUserXp(data.xp);
+        }
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+
+    loadUserXp();
+  }, [fetchUserXp]);
 
   return (
     <nav className="w-full bg-dark_primary_first text-ligther_neutral">
@@ -18,6 +39,11 @@ const Navbar = () => {
 
         <div className="hidden md:block items-center">
           <NavLinks />
+        </div>
+
+        <div>
+          <img className="w-8 h-8 inline" src={xp} alt="xp count" />
+          <span>{userXp}</span>
         </div>
 
         <img className="w-8 h-8 rounded-full" src={user_icon} alt="user photo" />

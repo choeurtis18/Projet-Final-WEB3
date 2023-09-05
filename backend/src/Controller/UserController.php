@@ -128,4 +128,27 @@ class UserController extends AbstractController
             'jwt' => $jwt
         ]);
     }
+
+    #[Route('/users/xp', name: 'user_xp', methods: ['GET'])]
+    public function getUserXp(): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'message' => "Vous n'avez pas de compte",
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            return $this->json([
+                'xp' => $user->getXp()
+            ]);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+    }
 }

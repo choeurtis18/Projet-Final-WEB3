@@ -11,17 +11,21 @@ import useGetXpUser from "../../Hook/useGetXpUser";
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [userXp, setUserXp] = useState(0);
-
+  const [error, setError] = useState(null);
+  
   const fetchUserXp = useGetXpUser();
 
   useEffect(() => {
     async function loadUserXp() {
-      const data = await fetchUserXp();
-      if (data && data.xp) {
-        setUserXp(data.xp);
+      try {
+        const data = await fetchUserXp();
+        if (data && data.xp) {
+            setUserXp(data.xp);
+        }
+      } catch (err) {
+        setError(err.message);
       }
     }
-    console.log(loadUserXp());
 
     loadUserXp();
   }, [fetchUserXp]);
@@ -38,7 +42,7 @@ const Navbar = () => {
         </div>
 
         <div>
-        <img className="w-8 h-8" src={xp} alt="xp count" />
+          <img className="w-8 h-8 inline" src={xp} alt="xp count" />
           <span>{userXp}</span>
         </div>
 

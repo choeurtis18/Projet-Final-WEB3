@@ -1,28 +1,38 @@
 <?php
 
-use App\Controller\ClassroomQuestionController;
 use App\Entity\ClassroomQuestion;
 use App\Entity\User;
 use App\Service\XpService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\SecurityBundle\Security;
+use App\Controller\ClassroomQuestionController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 
 it('calls XpService when a question is successfully answered', function () {
-    $question = Mockery::mock(ClassroomQuestion::class);
-    $question->shouldReceive('getXpValue')->andReturn(15);
+    $user = new User;
+    $question = new ClassroomQuestion;
+    $question->setXpValue(15); // Assuming you have a setter; adjust as needed
 
-    $user = Mockery::mock(User::class);
+    $xpService = \Mockery::mock(XpService::class);
+    $xpService->shouldReceive('addXpToUser')
+        ->once()
+        ->with($user, 15);
 
-    $security = Mockery::mock(Security::class);
-    $security->shouldReceive('getUser')->andReturn($user);
+    $router = \Mockery::mock(RouterInterface::class);
+    $router->shouldReceive('generate')
+        ->andReturn('some_route_url');
 
-    // Mocking the XpService
-    $xpService = Mockery::mock(XpService::class);
-    $xpService->shouldReceive('addXpToUser')->once()->with($user, 50);
+    $controller = \Mockery::mock(ClassroomQuestionController::class, [$xpService])
+        ->makePartial()
+        ->shouldAllowMockingProtectedMethods()
+        ->shouldReceive('getUser')
+        ->andReturn($user)
+        ->getMock();
 
-    $controller = new ClassroomQuestionController($xpService);
+    $container = new \Symfony\Component\DependencyInjection\Container;
+    $container->set('router', $router);
+    $controller->setContainer($container);
 
-    $controller->setContainer(Mockery::mock(ContainerInterface::class, ['get' => $security]));
+    $response = $controller->onQuestionSuccess($question);
 
-    $controller->onQuestionSuccess($question);
+    expect($response->getTargetUrl())->toBe('some_route_url');
 });

@@ -57,7 +57,10 @@ html, body {
   min-height: 100vh; 
 }
 
-footer{}
+footer{
+  background-color: var(--dark-primary-first);
+  color: var(--light-neutral);
+}
 
 
 

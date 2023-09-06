@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import {useParams, useHistory } from "react-router-dom";
 import moment from "moment";
+
 import eventImage from "../../assets/event.jpg";
+
 import ActionButton from "../../components/Buttons/ActionButton"
 import RouteLink from "../../components/Route/RouteLink"
 
@@ -15,7 +17,6 @@ const Event = () => {
 
     const deleteEvent = useDeleteEvent();
     const getEvent = useGetEvent();
-    let format;
 
     useEffect(() => {
         Promise.all([
@@ -25,6 +26,7 @@ const Event = () => {
         })
     }, [id]);
     
+    // Setting up the date's format
     let date_start = moment(event.date_start);
     let format_date_start = date_start.format("DD/MM/YYYY à  h:mm a")
 
@@ -55,7 +57,7 @@ const Event = () => {
             </div>
             <div className="my-6 flex flex-wrap items-center justify-end">
                 <ActionButton text="Supprimer l'événement" onClick={handleDeleteEvent} nav_link="#"></ActionButton>
-                <ActionButton text="Modifier" onClick="" nav_link="/update_event/${id}"></ActionButton>
+                <ActionButton text="Modifier" nav_link={`/update_event/${id}`}></ActionButton>
             </div>
             <span className=''>{returnMessage}</span>
             <div>

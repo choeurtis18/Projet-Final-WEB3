@@ -3,7 +3,7 @@ import useGetCoockie from "./useGetCoockie";
 export default function useUpdateEvent() {
     const credentials = useGetCoockie("token");
     
-    return function (eventName, id) {
+    return function (eventName, eventDescription, eventDateStart, eventDateEnd, id) {
         return fetch(`http://localhost:8245/event/${id}`, {
             method: 'PATCH',
             credentials: 'include',

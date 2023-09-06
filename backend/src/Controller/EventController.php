@@ -122,11 +122,23 @@ class EventController extends AbstractController
 
             $data = json_decode($request->getContent(), true);
             $name = $data['name'];
+            $description = $data['description'];
+            $date_start = $data['date_start'];
+            $date_end = $data['date_end'];
+            
 
             try {
                 if (in_array($current_user, $admins)) {
                     $event = $em->getReference(Event::class, $id);
                     $event->setName($name);
+                    $event->setDescription($description);
+
+                    $dateStart = new \DateTime($date_start);
+                    $event->setDateStart($dateStart);
+
+                    $dateEnd = new \DateTime($date_end);
+                    $event->setDateEnd($dateEnd);
+                    
                     $em->flush();
 
                     return $this->json([

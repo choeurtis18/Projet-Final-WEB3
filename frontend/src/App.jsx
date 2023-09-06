@@ -22,6 +22,7 @@ import AddMasterclass from './pages/Masterclass/AddMasterclass';
 import UpdateInstrument from './components/Instrument/UpdateInstrument';
 import UpdateComposer from './components/Composer/UpdateComposer';
 import UpdateMasterclass from './components/Masterclass/UpdateMasterclass';
+import UpdateUser from './pages/User/UpdateUser';
 import UpdateEvent from './pages/Event/UpdateEvent';
 import EventList from './pages/Event/EventList';
 import EventDetails from './pages/Event/Event';
@@ -61,6 +62,7 @@ function App() {
             <Route exact path='/add_instrument' component={AddInstrument}/>
             <Route exact path='/update_instrument/:id' component={UpdateInstrument}/>
             <Route exact path='/register' component={Register}/>
+            <Route exact path='/users/update' component={UpdateUser}/>
             <Route exact path='/events' component={EventList}/>
             <Route exact path='/event/:id' component={EventDetails}/>
             <Route exact path='/add_event' component={AddEvent} />

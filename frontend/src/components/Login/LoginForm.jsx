@@ -36,11 +36,10 @@ const Login = () => {
         password,
       });
 
-      const  token  = response.data.jwt;
-        
+      const token  = response.data.jwt;
+
       document.cookie = `token=${token}`
       
-      //dispatch(LoginAction(token, response.data.id, types.LOGIN_SUCCESS ))
       history.push('/');
     } catch (error) {
       dispatch({ type: types.LOGIN_FAILURE});

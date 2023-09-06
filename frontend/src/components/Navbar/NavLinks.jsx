@@ -24,6 +24,9 @@ export default function NavLinks() {
                 S'inscrire
             </NavLink>
         )}
+        <NavLink to={`/events`} className="w-full">
+            Events
+        </NavLink>
       </div>
     );
 };

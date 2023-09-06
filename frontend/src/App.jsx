@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage/HomePage';
 import MasterclassList from './pages/Masterclass/MasterclassList';
 import Masterclass from './pages/Masterclass/Masterclass';
-import MasterclassDetails from './pages/MasterclassDetails/MasterclassDetails';
 import MasterclassQuizz from './pages/MasterclassQuizz/MasterclassQuizz';
 import Composer from './pages/Composers/Composer';
 import ComposerList from './pages/Composers/ComposerList';
@@ -24,6 +23,10 @@ import UpdateInstrument from './components/Instrument/UpdateInstrument';
 import UpdateComposer from './components/Composer/UpdateComposer';
 import UpdateMasterclass from './components/Masterclass/UpdateMasterclass';
 import UpdateUser from './pages/User/UpdateUser';
+import UpdateEvent from './pages/Event/UpdateEvent';
+import EventList from './pages/Event/EventList';
+import EventDetails from './pages/Event/Event';
+import AddEvent from './pages/Event/AddEvent';
 // ... import other components
 
 function App() {
@@ -47,7 +50,6 @@ function App() {
             <Route exact path="/" component={Homepage} />
             <Route exact path="/masterclasses" component={MasterclassList} />
             <Route exact path="/masterclass/:id" component={Masterclass} />
-            <Route exact path="/masterclasses/:id" component={MasterclassDetails} />
             <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
             <Route exact path='/add_masterclass' component={AddMasterclass}/>
             <Route exact path='/update_masterclass/:id' component={UpdateMasterclass}/>
@@ -61,6 +63,11 @@ function App() {
             <Route exact path='/update_instrument/:id' component={UpdateInstrument}/>
             <Route exact path='/register' component={Register}/>
             <Route exact path='/users/update' component={UpdateUser}/>
+            <Route exact path='/events' component={EventList}/>
+            <Route exact path='/event/:id' component={EventDetails}/>
+            <Route exact path='/add_event' component={AddEvent} />
+            <Route exact path='/update_event/:id' component={UpdateEvent}/>
+
             {/* <Route path='*' component={NoPage}/> */}
             <Route exact path='/login' component={Login}/>
 

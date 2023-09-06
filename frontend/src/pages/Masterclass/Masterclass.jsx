@@ -5,26 +5,33 @@ import {NavLink, useHistory} from "react-router-dom";
 import useGetMasterclass from "../../Hook/useGetMasterclass";
 import useGetMasterclassCentreDeFormation from "../../Hook/useGetMasterclassCentreDeFormation";
 import OthersMasterclass from "../../components/Masterclass/OthersMasterclass";
+//import MasterclassDetails from "../MasterclassDetails/MasterclassDetails";
+import useMasterclassQuizzes from "../../Hook/useGetMasterclassQuizz";
 import useDeleteMasterclass from "../../Hook/useDeleteMasterclass";
 
 const Masterclass = () => {
     const {id} = useParams();
     const [masterclass, setMasterclass] = useState([]);
     const [centre_formation, setCentre_formation] = useState([]);
-    const [returnMessage, setReturnMessage] = useState('');
+
+    const [quizzes, setQuizzes] = useState([]);
 
     const getMasterclass = useGetMasterclass();
     const getMasterclassCentreDeFormation = useGetMasterclassCentreDeFormation();
-  
+    const getMasterclassQuizzes = useMasterclassQuizzes(id);
+
+    const [returnMessage, setReturnMessage] = useState('');
     const deleteMasterclass = useDeleteMasterclass();
 
     useEffect(() => {
         Promise.all([
             getMasterclassCentreDeFormation(id),
             getMasterclass(id),
-        ]).then(([cDf, masterLcass]) => {
+            getMasterclassQuizzes(id)
+        ]).then(([cDf, masterLcass,masterclassQuizzes]) => {
             setMasterclass(masterLcass.masterclass)
             setCentre_formation(cDf.centre_formation)
+            setQuizzes(masterclassQuizzes.quizzes)
         })
     }, [id]);
 
@@ -82,7 +89,25 @@ const Masterclass = () => {
                 <div className='flex flex-col text-sm'>
                 <p className='text-sm'>{centre_formation.email}</p>  
                 {/*<MasterclassDetails></MasterclassDetails>*/}       
-                </div>     
+                </div> 
+
+                {quizzes.length > 0 ? (
+            <div>
+                <h2 className="text-2xl font-bold text-dark_primary_first font-black">Quizz</h2>
+   
+            <div className="flex flex-col text-sm">
+              {quizzes.map((quiz) => (
+                <li key={quiz.id}>
+                  <span>{quiz.name}</span>
+                  <span>{quiz.counter}</span>
+                  <NavLink to={`/masterclassQuizz/${quiz.id}`}>Commencer le quizz</NavLink>
+
+                </li>
+              ))}
+            </div>
+            </div>
+          ) : (<div></div>)}
+                
             </div>
         </div>
         <OthersMasterclass id={centre_formation.id} type="centre_formation"></OthersMasterclass>

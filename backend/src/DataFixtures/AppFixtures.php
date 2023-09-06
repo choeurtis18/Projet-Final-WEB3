@@ -182,6 +182,7 @@ class AppFixtures extends Fixture
             $badge = new Badge();
             $badge->setName($faker->word);
             $badge->setImage($faker->imageUrl());
+            $badge->setXpThreshold(random_int(0, 500));
             $manager->persist($badge);
 
             

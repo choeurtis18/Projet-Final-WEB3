@@ -231,4 +231,24 @@ class MasterclassController extends AbstractController
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+
+#[Route('/masterclass/{id}/quizzes', name: 'app_masterclass_quizzes')]
+public function getMasterclassQuizzes(Masterclass $masterclass): Response
+{
+    $quizzes = $masterclass->getMasterclassQuizz();
+
+    try {
+        return $this->json([
+            'quizzes' => $quizzes
+        ], 200, [], ['groups' => 'read_composer']);
+    } catch (\Exception $exception) {
+        return $this->json([
+            'error' => "quizzes not found"
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
+
+
+    
 }

@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage/HomePage';
 import MasterclassList from './pages/Masterclass/MasterclassList';
 import Masterclass from './pages/Masterclass/Masterclass';
-import MasterclassDetails from './pages/MasterclassDetails/MasterclassDetails';
 import MasterclassQuizz from './pages/MasterclassQuizz/MasterclassQuizz';
 import Composer from './pages/Composers/Composer';
 import ComposerList from './pages/Composers/ComposerList';
@@ -28,7 +27,6 @@ function App() {
             <Route exact path="/" component={Homepage} />
             <Route exact path="/masterclasses" component={MasterclassList} />
             <Route exact path="/masterclass/:id" component={Masterclass} />
-            <Route exact path="/masterclasses/:id" component={MasterclassDetails} />
             <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
             <Route exact path='/composers' component={ComposerList} />
             <Route exact path='/composer/:id' component={Composer} />

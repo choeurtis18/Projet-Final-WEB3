@@ -1,0 +1,54 @@
+.answer-timer-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid gray;
+
+    .progress{
+        height: 5px;
+        transition-duration: 1s;
+        width: 0;
+        transition-timing-function: linear;
+    }
+
+
+}
+
+
+.progress-bar {
+    background: #F7EDD5;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 4rem;
+  }
+  
+  .progress-bar--step {
+    height: 1rem;
+    overflow: hidden;
+    transition-timing-function: linear;
+    transition-duration: 1s;
+  }
+  
+  .progress-bar--stripe {
+    height: 100%;
+    width: calc(100% + 200px);
+    background-color: red;
+    background-size: 100px 100px;
+    opacity: 0.3;
+    &.progress-bar--animate-counter-acclerate {
+      width: 200%;
+    }
+  }
+  
+//   .progress-bar--animate {
+//     animation: progress 10s linear infinite;
+//   }
+  
+  .progress-bar--animate-counter {
+    animation: counter-progress 3s linear infinite;
+  }
+  
+  .progress-bar--animate-counter-acclerate {
+    animation: counter-progress-accelerate 6s linear infinite;
+  }

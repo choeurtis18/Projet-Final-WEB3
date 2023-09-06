@@ -38,7 +38,6 @@ body {
   margin: 0;
   font-size: 18px;
   margin: 0 auto;
- 
 }
 
 html, body {
@@ -58,7 +57,10 @@ html, body {
   min-height: 100vh; 
 }
 
-footer{}
+footer{
+  background-color: var(--dark-primary-first);
+  color: var(--light-neutral);
+}
 
 
 
@@ -129,4 +131,5 @@ p{
 .bg-secondary{
   background: rgba(35,24,71,1);
 }
+
 

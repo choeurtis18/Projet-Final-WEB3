@@ -1,22 +1,27 @@
 import {useParams} from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 
 import useGetMasterclass from "../../Hook/useGetMasterclass";
 import useGetMasterclassCentreDeFormation from "../../Hook/useGetMasterclassCentreDeFormation";
 import OthersMasterclass from "../../components/Masterclass/OthersMasterclass";
 //import MasterclassDetails from "../MasterclassDetails/MasterclassDetails";
 import useMasterclassQuizzes from "../../Hook/useGetMasterclassQuizz";
+import useDeleteMasterclass from "../../Hook/useDeleteMasterclass";
 
 const Masterclass = () => {
     const {id} = useParams();
     const [masterclass, setMasterclass] = useState([]);
     const [centre_formation, setCentre_formation] = useState([]);
+
     const [quizzes, setQuizzes] = useState([]);
 
     const getMasterclass = useGetMasterclass();
     const getMasterclassCentreDeFormation = useGetMasterclassCentreDeFormation();
     const getMasterclassQuizzes = useMasterclassQuizzes(id);
+
+    const [returnMessage, setReturnMessage] = useState('');
+    const deleteMasterclass = useDeleteMasterclass();
 
     useEffect(() => {
         Promise.all([
@@ -30,8 +35,19 @@ const Masterclass = () => {
         })
     }, [id]);
 
-    console.log(quizzes);
-  return (
+
+    const history = useHistory();
+    const handleDeleteMasterclass = (e) => {
+        deleteMasterclass(id).then(data => {
+            setReturnMessage(data.message);
+
+            if(data.message == "Masterclass Delete") {
+                history.push('/Masterclasses', { replace: true });
+            }
+        });
+    }
+
+    return (
       <div className="w-full px-4 lg:px-16 md:px-16">
         <NavLink to={`/masterclasses`}
                     className="">
@@ -46,6 +62,23 @@ const Masterclass = () => {
             </NavLink> : <span></span>
             }
         </div>
+        <div className="grid gap-x-16 my-4 lg:flex md:flex">
+            <div className='w-auto lg:w-1/2 md:w-1/2'>
+                <p className="bg-mid_primary_first text-ligther_neutral w-max font-bold py-2 px-6 border border-blue-700 rounded"
+                    onClick={handleDeleteMasterclass}
+                >
+                    Delete
+                </p>
+            </div>
+            <div className='w-auto lg:w-1/2 md:w-1/2'> 
+            <NavLink to={`/update_masterclass/${id}`}
+                className="bg-mid_primary_first text-ligther_neutral w-max font-bold py-2 px-6 border border-blue-700 rounded">
+                Update
+            </NavLink>
+            </div>
+        </div>
+        <span className=''>{returnMessage}</span>
+
         <div className="grid gap-x-16 my-4 lg:flex">
             <div className='w-auto lg:w-2/3'>
                 <h2 className="text-2xl font-bold text-mid_primary_first font-black">Description</h2>
@@ -77,7 +110,6 @@ const Masterclass = () => {
                 
             </div>
         </div>
-
         <OthersMasterclass id={centre_formation.id} type="centre_formation"></OthersMasterclass>
       </div>
   );

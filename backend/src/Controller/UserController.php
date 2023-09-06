@@ -17,9 +17,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Firebase\JWT\JWT;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends AbstractController
 {
@@ -35,10 +36,16 @@ class UserController extends AbstractController
             ], 409);
         }
 
-        if (!is_array($data['roles'])) {
-            return $this->json([
-                'error' => 'Le format du rôle est incorrect.'
-            ], 400);
+
+        $roles = $data['roles'];
+        $allowedRoles = ['professor', 'student', 'user'];
+        
+        foreach ($roles as $role) {
+            if (!in_array($role, $allowedRoles, true)) {
+                return $this->json([
+                    'error' => 'Le format du rôle est incorrect.'
+                ], 400);
+            }
         }
 
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -65,7 +72,6 @@ class UserController extends AbstractController
     {
         $users = $userRepository->getAllAdminUser();
 
-        var_dump($users);
         try {
             return $this->json([
                 'users' => $users
@@ -92,6 +98,57 @@ class UserController extends AbstractController
             return $this->json([
                 'error' => "formation not found"
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route('/login', name: 'user_login')]
+    public function login(string $appSecret): JsonResponse
+    {
+        /** @var $user ?User */
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $jwt = JWT::encode([
+            'email' => $user->getEmail(),
+            'id' => $user->getId()
+        ],
+            $appSecret,
+            'HS256');
+
+        return $this->json([
+            'message' => 'Welcome ! ',
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+            'jwt' => $jwt
+        ]);
+    }
+
+    #[Route('/users/xp', name: 'user_xp', methods: ['GET'])]
+    public function getUserXp(): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'message' => "Vous n'avez pas de compte",
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            return $this->json([
+                'xp' => $user->getXp()
+            ]);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
         }
     }
 }

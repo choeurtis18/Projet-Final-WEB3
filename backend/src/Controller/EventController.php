@@ -3,46 +3,149 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Repository\EventRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
-
 
 class EventController extends AbstractController
-{
-  #[Route('/events', name: 'app_events_show')]
-    public function show_all(ManagerRegistry $doctrine): Response
     {
-        $events = $doctrine->getRepository(Event::class)->findAll();
-        if (!$events) {
-            throw $this->createNotFoundException(
-                'No events found'
-            );
+        #[Route('/events', name: 'app_events_show', methods: ['GET'])]
+        public function show_all(EventRepository $eventRepository): Response
+        {
+            $events = $eventRepository->findAll();
+
+            try {
+                return $this->json([
+                    'events' => $events
+                ], 200, [], ['groups' => 'read_composer']);
+            } catch (\Exception $exception) {
+                return $this->json([
+                    'error' => "Events not found"
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+    
+        
+        #[Route('/event/{id}', name: 'app_event_show',  methods: ['GET'])]
+        public function show(EventRepository $eventRepository, int $id): Response
+        {
+
+            $event = $eventRepository->findOneBy(['id' => $id]);
+
+            try {
+                return $this->json([
+                    'event' => $event,
+                ], 200, [], ['groups' => 'read_composer']);
+            } catch (\Exception $exception) {
+                return $this->json([
+                    'error' => "No event found"
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            
         }
 
-        return $this->render('event/index.html.twig', ['events' => $events]);
+        #[Route('/event', name: 'app_create_event', methods: ['POST'])]
+        public function create_event(Request $request, EventRepository $eventRepository) { 
+            $current_user = $this->getUser();
 
-    }
+            $data = json_decode($request->getContent(), true);
+            $name = $data['name'];
 
-    #[Route('/event/{id}', name: 'app_event_show')]
-    public function show(ManagerRegistry $doctrine, int $id): Response
-    {
-        $event = $doctrine->getRepository(Event::class)->find($id);
-        if (!$event) {
-            throw $this->createNotFoundException(
-                'No event found for id '.$id
-            );
+            try {
+                if (!$eventRepository->findOneBy(['name' => $name])) {
+                    $event = new Event();
+                    $event->setName($name);
+
+                    $eventRepository->save($event, true);
+
+                    return $this->json([
+                        'status' => 1,
+                        'message' => "New Event Add"
+                    ], Response::HTTP_OK);;                
+                } else {
+                    return $this->json([
+                        'status' => 0,
+                        'message' => "Event already exists"
+                    ], Response::HTTP_OK);;     
+                }
+
+            } catch (\Exception $exception) {
+                return $this->json([
+                    'status' => 0,
+                    'error' => "error durring add event"
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         }
 
-        return $this->render('event/show_event.html.twig', ['event' => $event]);
+        #[Route('/event/{id}', name: 'app_delete_event', methods: ['DELETE'])]
+        public function delete_event(UserRepository $userRepository, EventRepository $eventRepository, int $id, EntityManagerInterface $em) 
+        { 
+            $current_user = $this->getUser();
+            $admins = $userRepository->getAllAdminUser();
 
-    }
+            try {
+                if (in_array($current_user, $admins)) {
 
+                    $event = $em->getReference(Event::class, $id);
+                    $em->remove($event);
+                    $em->flush();
+
+                    return $this->json([
+                        'status' => 1,
+                        'message' => "Evénement Supprimé"
+                    ], Response::HTTP_OK);;                
+                } else {
+                    return $this->json([
+                        'status' => 0,
+                        'message' => "Vous n'êtes pas autorisé à supprimer un événement"
+                    ], Response::HTTP_OK);;     
+                }
+
+            } catch (\Exception $exception) {
+                return $this->json([
+                    'status' => 0,
+                    'error' => "Erreur lors de la supression d'un événement"
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        #[Route('/event/{id}', name: 'app_update_event', methods: ['PATCH'])]
+        public function update_event(Request $request, EntityManagerInterface $em, int $id,
+        UserRepository $userRepository, EventRepository $eventRepository) { 
+            $current_user = $this->getUser();
+            $admins = $userRepository->getAllAdminUser();
+
+            $data = json_decode($request->getContent(), true);
+            $name = $data['name'];
+
+            try {
+                if (in_array($current_user, $admins)) {
+                    $event = $em->getReference(Event::class, $id);
+                    $event->setName($name);
+                    $em->flush();
+
+                    return $this->json([
+                        'status' => 1,
+                        'message' => "Event Update"
+                    ], Response::HTTP_OK);;                
+                } else {
+                    return $this->json([
+                        'status' => 0,
+                        'message' => "Vous n'êtes pas autorisé à mettre à jour un événement"
+                    ], Response::HTTP_OK);;     
+                }
+
+            } catch (\Exception $exception) {
+                return $this->json([
+                    'status' => 0,
+                    'error' => "Erreur lors de la mise à jour d'un événement"
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
 
 }

@@ -1,20 +1,19 @@
-export default function useAddInstrument() {
-    //const credentials = btoa(`${loggedUser.username}:${loggedUser.password}`);
+import useGetCoockie from "./useGetCoockie";
 
+export default function useAddInstrument() {
+    const credentials = useGetCoockie("token");
+    
     return function (instrumentName) {
-        return fetch(`http://localhost:8245/create_instrument`, {
+        return fetch(`http://localhost:8245/instrument`, {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
-            /*
             headers: {
-                'Authorization': `Basic ${credentials}`
+                'Authorization': `Bearer ${credentials}`
             },
-            */
             body: JSON.stringify({
                 name: instrumentName,
            })
-        })
-            .then(res => res.json())
+        }).then(data => data.json())
     }
 }

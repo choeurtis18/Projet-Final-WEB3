@@ -21,6 +21,7 @@ use Firebase\JWT\JWT;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Firebase\JWT\Key;
 
 class UserController extends AbstractController
 {
@@ -128,4 +129,87 @@ class UserController extends AbstractController
             'jwt' => $jwt
         ]);
     }
+
+    
+    #[Route('/users/{id}/update', name: 'user_update', methods: ['PUT'])]
+    public function updateUser(int $id, Request $request, EntityManagerInterface $entityManager, string $appSecret): JsonResponse 
+    {
+        $token = getallheaders()["Authorization"];
+        
+        $jwt_token = str_replace('Bearer ', '', $token);
+
+        if (!$token) {
+            return $this->json([
+                'error' => "Token manquant" ,
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        
+        try {
+            $decoded = JWT::decode($jwt_token, new Key($appSecret, 'HS256'));
+            $userIdFromToken = $decoded->id;
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Token invalide'. $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
+        if ($userIdFromToken != $id) {
+            return new JsonResponse(['error' => 'Action non autorisée'], Response::HTTP_FORBIDDEN);
+        }
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->find($id);
+        
+        if (!$user) {
+            return new JsonResponse(['error' => 'Utilisateur non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        if(isset($data['email'])) {
+            $user->setEmail($data['email']);
+        }
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return new JsonResponse(['message' => 'Informations mises à jour avec succès']);
+    }
+
+    #[Route('/users/{id}', name: 'user_get', methods: ['GET'])]
+    public function getUserInfo(int $id, Request $request, EntityManagerInterface $entityManager, string $appSecret): JsonResponse 
+    {
+        $token = getallheaders()["Authorization"];
+        
+        $jwt_token = str_replace('Bearer ', '', $token);
+
+        if (!$token) {
+            return $this->json([
+                'error' => "Token manquant" ,
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        
+        try {
+            $decoded = JWT::decode($jwt_token, new Key($appSecret, 'HS256'));
+            $userIdFromToken = $decoded->id;
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Token invalide'. $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
+        if ($userIdFromToken != $id) {
+            return new JsonResponse(['error' => 'Action non autorisée'], Response::HTTP_FORBIDDEN);
+        }
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->find($id);
+        
+        if (!$user) {
+            return new JsonResponse(['error' => 'Utilisateur non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json([
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
 }

@@ -97,7 +97,7 @@ function MasterclassQuizz() {
       if (currentQuestion !== quiz.questions.length ) {
         setShowCorrection(true);
       } else {
-        setShowCorrection(true);
+        setShowResult(true);
       }
     }
 
@@ -110,6 +110,14 @@ function MasterclassQuizz() {
     setShowCorrection(false);
     setCurrentQuestion((prev) => prev + 1);
   };
+
+  const handleEnd = () => {
+    console.log("ear");
+    setShowCorrection(false);
+    setShowResult(true);
+   
+  };
+
 
   const handleOnTimeUp = () => {
     // setAnswerQuestion(false);
@@ -160,155 +168,162 @@ function MasterclassQuizz() {
   const { title, proposition, answer, xp_value } = quiz.questions[currentQuestion];
   return (
     <div className="full-container">
-
-        <nav>
-          {showAnswerTimer && !showCorrection && !showResult && (
-              <AnswerTimer duration={10} onTimeUp={handleOnTimeUp} />
-            )}
-        </nav>
-
+      <nav>
+        {showAnswerTimer && !showCorrection && !showResult && (
+          <AnswerTimer duration={10} onTimeUp={handleOnTimeUp} />
+        )}
+      </nav>
+  
+      <div className="headerQuizz">
+        <div>
+          <button className="bg-primary_second hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-28 h-100">
+            {currentQuestion + 1}/{quiz.questions.length}
+          </button>
+        </div>
+        <div className="header-title">
         <div className="headerQuizz">
-          <div>
-            <button className="bg-primary_second hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-28 h-100">
-              {currentQuestion + 1}/{quiz.questions.length}
-            </button>
-          </div>
-          <div className="header-title">
-          <div className="headerQuizz">
-              {!showCorrection && !showResult ? (
-                <h2>{title}</h2>
-              ) : (
-                <h2>Correction</h2>
-              )}
-            </div>
-          </div>
-          <div className="header-counter">
-          {!showCorrection && !showResult && (
-            <button className="bg-primary_second hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Button
-            </button>
-          )}
+            {!showCorrection && !showResult ? (
+              <h2>{title}</h2>
+            ) : (
+              <h2>Correction</h2>
+            )}
           </div>
         </div>
-
-        <div className="quizz-container">
-          {!showCorrection ? (
-            <div className="quizz-container-container">
-              {/*<span className='active-question-no'>{currentQuestion + 1}</span>
-              <span className='total-question'>/{quiz.questions.length}</span> */}
-              <div className="image-quizz">
-                <img src={logoViolet} alt="" />
-              </div>
-              <div className="liste-reponse">
-                <ul>
-                  {proposition.map((proposition, index) => (
-                    <li
-                      onClick={() => onAnswerClick(proposition)}
-                      key={index}
-                      className={
-                        answerQuestion === proposition
-                          ? "button-quizz selected-answer"
-                          : "button-quizz"
-                      }
-                    >
-                      <span>{proposition}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* <div className='footer'>
-                <button onClick={onClickNext} disabled={answerQuestion === null}>
-                  {currentQuestion === quiz.questions.length - 1 ? 'Terminé' : 'Poursuivre'}
-                </button>
-              </div> */}
-            </div>
-          ) : showCorrection && currentQuestion !== quiz.questions.length ? (
-            <div className="quizz-container-container">
-              {/*<span className='active-question-no'>{currentQuestion + 1}</span>
-              <span className='total-question'>/{quiz.questions.length}</span> */}
-              <div className="image-quizz">
-                <img src={logoViolet} alt="" />
-              </div>
-              <div className="liste-reponse">
-                <ul className="ul-correction">
-                  <li className="button-quizz button-correction" disabled>
-                    <span>{quiz.questions[currentQuestion].answer}</span>
-                  </li>
-                </ul>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                  efficitur sodales turpis quis scelerisque. Pellentesque iaculis
-                  ante ut nisl lobortis, nec volutpat justo blandit. Proin
-                  efficitur tincidunt nisl, sit amet suscipit purus bibendum a.
-                  Nullam ornare nulla eu leo facilisis vehicula. Curabitur arcu
-                  libero, sollicitudin quis vulputate non, bibendum a justo.
-                  Praesent porttitor justo nec consectetur luctus. Morbi convallis
-                  eget ipsum ac fringilla. Suspendisse sed elit sit amet diam
-                  auctor sollicitudin eget vel nisi. Proin sit amet ante tortor.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="container-result">
-              <div className="quizz-container-container">
-                {/*<span className='active-question-no'>{currentQuestion + 1}</span>
-              <span className='total-question'>/{quiz.questions.length}</span> */}
-                <div className="image-quizz">
-                  <img src={feedbackImage} alt="triangle instrument" />
-                </div>
-                <div className="liste-reponse">
-                  <button className="button-quizz-summary button-quizz  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    <span>
-                      {result.correctAnswers}/{quiz.questions.length}
-                    </span>
-                    <p>bonnes réponses</p>
-            
-                  </button>
-        
-                </div>
-              </div>
-              <div className="phrase-conclusion"> <p>{feedbackExpression}</p></div>
-            
-            </div> 
-          )}
-        </div>
-        <div className="footerQuizz">
-          <div className="gradLine3"></div>
-          
-          <div className="buttonContainer">
-            <button className="centerButton bg-primary_second hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-              
-              🎻 {xp_value} Xp
-            </button>
-          </div>
-          <div className="button-footer">
-            <div></div>
-            <div></div>
-            <div>
-              {showCorrection && currentQuestion !== quiz.questions.length - 1 ? (
-                <button
-                  className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={onClickContinue}
-                >
-                  Continuer
-                </button>
-              ) : (
-                <button
-                  className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => onClickNext(answer)}
-                  disabled={answerQuestion === null}
-                >
-                  {showCorrection && currentQuestion !== quiz.questions.length
-                    ? "Terminé"
-                    : "Poursuivre"}
-                </button>
-              )}
-            </div>
-          </div>
+        <div className="header-counter">
+        {!showCorrection && !showResult && (
+          <button className="bg-primary_second hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Button
+          </button>
+        )}
         </div>
       </div>
-    );
+  
+      <div className="quizz-container">
+        {showResult ? (
+          <div className="container-result">
+            <div className="quizz-container-container">
+              {/*<span className='active-question-no'>{currentQuestion + 1}</span>
+            <span className='total-question'>/{quiz.questions.length}</span> */}
+              <div className="image-quizz">
+                <img src={feedbackImage} alt="triangle instrument" />
+              </div>
+              <div className="liste-reponse">
+                <button className="button-quizz-summary button-quizz  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                  <span>
+                    {result.correctAnswers}/{quiz.questions.length}
+                  </span>
+                  <p>bonnes réponses</p>
+          
+                </button>
+      
+              </div>
+            </div>
+            <div className="phrase-conclusion"> <p>{feedbackExpression}</p></div>
+                  </div>
+        ) : ! showCorrection ? (
+          <div className="quizz-container-container">
+            {/*<span className='active-question-no'>{currentQuestion + 1}</span>
+            <span className='total-question'>/{quiz.questions.length}</span> */}
+            <div className="image-quizz">
+              <img src={logoViolet} alt="" />
+            </div>
+            <div className="liste-reponse">
+              <ul>
+                {proposition.map((proposition, index) => (
+                  <li
+                    onClick={() => onAnswerClick(proposition)}
+                    key={index}
+                    className={
+                      answerQuestion === proposition
+                        ? "button-quizz selected-answer"
+                        : "button-quizz"
+                    }
+                  >
+                    <span>{proposition}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+  
+            {/* <div className='footer'>
+              <button onClick={onClickNext} disabled={answerQuestion === null}>
+                {currentQuestion === quiz.questions.length - 1 ? 'Terminé' : 'Poursuivre'}
+              </button>
+            </div> */}
+          </div>
+        ) : (
+          <div className="quizz-container-container">
+            {/*<span className='active-question-no'>{currentQuestion + 1}</span>
+            <span className='total-question'>/{quiz.questions.length}</span> */}
+            <div className="image-quizz">
+              <img src={logoViolet} alt="" />
+            </div>
+            <div className="liste-reponse">
+              <ul className="ul-correction">
+                <li className="button-quizz button-correction" disabled>
+                  <span>{quiz.questions[currentQuestion].answer}</span>
+                </li>
+              </ul>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                efficitur sodales turpis quis scelerisque. Pellentesque iaculis
+                ante ut nisl lobortis, nec volutpat justo blandit. Proin
+                efficitur tincidunt nisl, sit amet suscipit purus bibendum a.
+                Nullam ornare nulla eu leo facilisis vehicula. Curabitur arcu
+                libero, sollicitudin quis vulputate non, bibendum a justo.
+                Praesent porttitor justo nec consectetur luctus. Morbi convallis
+                eget ipsum ac fringilla. Suspendisse sed elit sit amet diam
+                auctor sollicitudin eget vel nisi. Proin sit amet ante tortor.
+              </p>
+            </div>
+                  </div>
+        )}
+      </div>
+  
+      <div className="footerQuizz">
+        <div className="gradLine3"></div>
+            
+        <div className="buttonContainer">
+          <button className="centerButton bg-primary_second hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            
+            🎻 {xp_value} Xp
+          </button>
+        </div>
+        <div className="button-footer">
+          <div></div>
+          <div></div>
+          <div>
+          {showCorrection ? (
+            currentQuestion !== quiz.questions.length - 1 ? (
+              <button
+                className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={onClickContinue}
+              >
+                Continuer
+              </button>
+            ) : (
+              <button
+                className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={handleEnd}
+              >
+                Terminé
+              </button>
+            )
+          ) : (
+            <button
+              className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => onClickNext(answer)}
+              disabled={answerQuestion === null}
+            >
+              Poursuivre
+            </button>
+          )}
+  
+          </div>
+        </div>    </div>
+    </div>
+  );
+  
   }
 
 export default MasterclassQuizz;

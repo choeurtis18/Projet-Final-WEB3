@@ -5,7 +5,7 @@ import logo from "../../assets/logo.svg";
 import user_icon from "../../assets/user-information-290.svg";
 import xp from "../../assets/xp.svg";
 import NavLinks from '../../components/Navbar/NavLinks';
-import useGetXpUser from "../../Hook/useGetXpUser";
+// import useGetXpUser from "../../Hook/useGetXpUser";
 
 
 const Navbar = () => {
@@ -13,22 +13,22 @@ const Navbar = () => {
   const [userXp, setUserXp] = useState(0);
   const [error, setError] = useState(null);
   
-  const fetchUserXp = useGetXpUser();
+  // const fetchUserXp = useGetXpUser();
 
-  useEffect(() => {
-    async function loadUserXp() {
-      try {
-        const data = await fetchUserXp();
-        if (data && data.xp) {
-            setUserXp(data.xp);
-        }
-      } catch (err) {
-        setError(err.message);
-      }
-    }
+  // useEffect(() => {
+  //   async function loadUserXp() {
+  //     try {
+  //       const data = await fetchUserXp();
+  //       if (data && data.xp) {
+  //           setUserXp(data.xp);
+  //       }
+  //     } catch (err) {
+  //       setError(err.message);
+  //     }
+  //   }
 
-    loadUserXp();
-  }, [fetchUserXp]);
+  //   loadUserXp();
+  // }, [fetchUserXp]);
 
   return (
     <nav className="w-full bg-dark_primary_first text-ligther_neutral">

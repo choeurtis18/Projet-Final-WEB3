@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import logo from "../../assets/logo.svg";
 import user_icon from "../../assets/user-information-290.svg";
@@ -30,6 +31,8 @@ const Navbar = () => {
   //   loadUserXp();
   // }, [fetchUserXp]);
 
+  const jwt = Cookies.get('token');
+
   return (
     <nav className="w-full bg-dark_primary_first text-ligther_neutral">
       <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 border-b border-solid border-slate-600">
@@ -41,12 +44,17 @@ const Navbar = () => {
           <NavLinks />
         </div>
 
+        {jwt && (
+                <NavLink to={`/users/update`} className="flex-shrink-0 font-bold tracking-wider">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                   </svg>
+                </NavLink>
+        )}
         <div>
           <img className="w-8 h-8 inline" src={xp} alt="xp count" />
           <span>{userXp}</span>
         </div>
-
-        <img className="w-8 h-8 rounded-full" src={user_icon} alt="user photo" />
 
         <button
           type="button"

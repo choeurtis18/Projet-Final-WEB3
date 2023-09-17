@@ -114,7 +114,6 @@ function MasterclassQuizz() {
   };
 
   const handleEnd = () => {
-    console.log("ear");
     setShowCorrection(false);
     setShowResult(true);
    

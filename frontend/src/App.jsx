@@ -6,6 +6,7 @@ import Homepage from './pages/Homepage/HomePage';
 import MasterclassList from './pages/Masterclass/MasterclassList';
 import Masterclass from './pages/Masterclass/Masterclass';
 import MasterclassQuizz from './pages/MasterclassQuizz/MasterclassQuizz';
+import FormationsList from './pages/Formations/FormationsList';
 import Composer from './pages/Composers/Composer';
 import ComposerList from './pages/Composers/ComposerList';
 import Instrument from './pages/Instruments/Instrument';
@@ -54,6 +55,7 @@ function App() {
             <Route exact path="/masterclassQuizz/:quizId" component={MasterclassQuizz} />
             <Route exact path='/add_masterclass' component={AddMasterclass}/>
             <Route exact path='/update_masterclass/:id' component={UpdateMasterclass}/>
+            <Route exact path="/formations" component={FormationsList} />
             <Route exact path='/composers' component={ComposerList} />
             <Route exact path='/composer/:id' component={Composer} />
             <Route exact path='/add_composer' component={AddComposer}/>

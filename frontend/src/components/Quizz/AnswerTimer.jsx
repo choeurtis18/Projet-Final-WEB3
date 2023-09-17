@@ -28,7 +28,7 @@ function AnswerTimer({ duration, onTimeUp }) {
 
   return (
     <div className="progress-bar">
-    <div style={{ width: `${progressLoaded}%` , backgroundColor:`${progressLoaded <70 ? "#F4CF74" :  "red"}` }}className="progress-bar--step progress-bar--animate">{counter}</div>
+    <div style={{ width: `${progressLoaded}%` , backgroundColor:`${progressLoaded <70 ? "#F4CF74" :  "red"}` }}className="progress-bar--step progress-bar--animate"></div>
     </div>
   );
 }

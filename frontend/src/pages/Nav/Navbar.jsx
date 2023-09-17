@@ -4,11 +4,12 @@ import Cookies from 'js-cookie';
 import { useHistory } from 'react-router-dom';
 import logo from "../../assets/logo.svg";
 import user_icon from "../../assets/user-information-290.svg";
+import px from "../../assets/px.svg";
 import xp from "../../assets/xp.svg";
 import NavLinks from '../../components/Navbar/NavLinks';
 import { RiLogoutBoxRLine } from 'react-icons/ri'; 
 
-// import useGetXpUser from "../../Hook/useGetXpUser";
+import useGetXpUser from "../../Hook/useGetXpUser";
 
 
 const Navbar = () => {
@@ -17,22 +18,23 @@ const Navbar = () => {
   const [error, setError] = useState(null);
   const history = useHistory();
 
-  // const fetchUserXp = useGetXpUser();
+  const fetchUserXp = useGetXpUser();
 
-  // useEffect(() => {
-  //   async function loadUserXp() {
-  //     try {
-  //       const data = await fetchUserXp();
-  //       if (data && data.xp) {
-  //           setUserXp(data.xp);
-  //       }
-  //     } catch (err) {
-  //       setError(err.message);
-  //     }
-  //   }
+  useEffect(() => {
+    async function loadUserXp() {
+      try {
+        const data = await fetchUserXp();
+        if (data && data.xp) {
+            setUserXp(data.xp);
+        }
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+    loadUserXp();
+  }, [fetchUserXp]);
 
-  //   loadUserXp();
-  // }, [fetchUserXp]);
+  console.log(userXp);
 
   const jwt = Cookies.get('token');
   const handleLogout = () => {
@@ -66,8 +68,9 @@ const Navbar = () => {
         <div className='flex row gap-10'>
           
         <div>
-            <img className="w-8 h-8 inline" src={xp} alt="xp count" />
+            <img className="mr-2 inline" src={px} alt="px" />
             <span>{userXp}</span>
+            <img className="mb-4 w-8 h-8 inline" src={xp} alt="xp count" />
           </div>
           <div>
                     <NavLink to={`/users/update`} className="flex-shrink-0 font-bold tracking-wider">
@@ -86,8 +89,6 @@ const Navbar = () => {
                 </button>
               </div>
           </div>
-         
-         
         </div>
   )}
         <button

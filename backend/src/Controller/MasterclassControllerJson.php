@@ -53,9 +53,7 @@ class MasterclassControllerJson extends AbstractController
  */
 public function getMasterclassDetails(EntityManagerInterface $entityManager, $id)
 {
-    // Assuming you have a service or repository to fetch the masterclass details
-    // Replace the following with your actual fetching logic
-    // $masterclass = $this->getDoctrine()->getRepository(Masterclass::class)->find($id);
+   
     $masterclassRepository = $entityManager->getRepository(\App\Entity\Masterclass::class);
     $masterclass = $masterclassRepository->find($id);
 
@@ -63,30 +61,22 @@ public function getMasterclassDetails(EntityManagerInterface $entityManager, $id
         throw $this->createNotFoundException('Masterclass not found.');
     }
 
-    // Assuming your Masterclass entity has properties like title and description
     $data = [
         'title' => $masterclass->getTitle(),
         'description' => $masterclass->getDescription(),
-        // Add other properties as needed
     ];
 
-    // Assuming you have a property in your Masterclass entity that holds the associated quizzes
-    // Adjust the property name according to your actual entity property name
     $quizzes = $masterclass->getMasterclassQuizz();
 
-    // Assuming Quiz entity has properties like title and description
     $quizData = [];
     foreach ($quizzes as $quizz) {
         $quizzData[] = [
             'id' => $quizz->getId(),
-            // 'user_id' => $quizz->getUser(),
             'name' => $quizz->getName(),
             'counter' => $quizz->getCounter(),
-            // Add other properties as needed
         ];
     }
 
-    // Add quiz data to the response
     $data['quizzes'] = $quizzData;
 
     return new JsonResponse($data);

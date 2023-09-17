@@ -28,12 +28,12 @@ export default function OthersMasterclass(props) {
 
     return (
         <div className="flex flex-col my-4 lg:flex md:flex">
-            <h2 className='text-2xl my-8 font-medium text-mid_primary_second font-black'>Les masterclasses</h2>
+            <h2 className='text-2xl my-8 font-medium text-mid_primary_second font-black'>Les autres masterclasses</h2>
             <div className='flex flex-wrap gap-4'>
             {
                 masterclasses.map((masterclasse, index) => (
                     <NavLink key={index} to={`/masterclass/${masterclasse.id}`}
-                        className="w-fit border border-mid_primary_second rounded-lg p-4 lg:w-1/4 bg-ligther_primary_second grid gap-y-2">
+                        className="w-fit border border-mid_primary_second rounded-lg p-4 lg:w-1/4 bg-ligther_primary_second grid gap-y-2 card-page">
                         <h3 className="text-xl font-black text-mid_primary_second font-black">{masterclasse.title}</h3>
                         <p className="text-sm">{masterclasse.description.substring(0, 100)}</p>
                     </NavLink>

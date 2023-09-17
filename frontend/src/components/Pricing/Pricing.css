@@ -1,0 +1,105 @@
+.PricingCard {
+    padding: 2em;
+    border-radius: 20px;
+    background: #fafafd;
+    opacity: 0.9;
+    text-align: center;
+    color: #5D5A88;
+    width: min(100%, 22rem);
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+  
+  .PricingCard:nth-child(2) {
+    transform: scale(1.05);
+  }
+  
+  .PricingCard header > .card-price {
+    margin-block: 1rem;
+    font-size: 3em;
+  }
+  
+  .PricingCard header > .card-price span{
+    font-size: 17px;
+  }
+
+ 
+  .PricingCard .card-features :first-child {
+    border-top: 1px solid var(--neutral-light-grayish-blue);
+  }
+  
+  .PricingCard .card-features :last-child {
+    margin-bottom: 2em;
+  }
+
+  .PricingCard .card-features .item{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .PricingCard .card-features .text{
+    text-align: start;
+  }
+  
+  .PricingCard .card-btn {
+    cursor: pointer;
+    padding-block: 1em;
+    width: 70%;
+    border-radius: 3.5em;
+    background-color: #372770;
+    border: 2px solid transparent;
+    outline: transparent;
+    transition: 0.125s ease;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .PricingCard .card-btn:is(:focus-visible, :hover) {
+    color: hsl(237, 63%, 64%);
+    background: linear-gradient(white, white) padding-box,
+      linear-gradient(to right, var(--primary-linear-gradient)) border-box;
+    border-radius: 0.5em;
+    border: 2px solid transparent;
+  }
+  
+  .PricingCard:nth-child(2) .card-btn {
+    background: transparent;
+    background-color: #372770;
+    color: white;
+  }
+  
+  .PricingCard:nth-child(2) .card-btn:is(:focus-visible, :hover) {
+    color: var(--neutral-white);
+    background: linear-gradient(to right, var(--primary-linear-gradient))
+        padding-box,
+      linear-gradient(white, white) border-box;
+    border-radius: 0.5em;
+    border: 2px solid transparent;
+  }
+  
+  @media screen and (max-width: 800px) {
+    .PricingCard:nth-child(2) {
+      align-self: center;
+    }
+    
+  }
+
+  .card-features{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .PricingCard{
+      width:  min(100%, 25rem);
+    }
+    
+  }

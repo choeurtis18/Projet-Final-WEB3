@@ -13,9 +13,6 @@ export default function NavLinks() {
         <NavLink to={`/masterclasses`} className="pr-3 w-full">
             Masterclass
         </NavLink>
-        <NavLink to={`/events`} className="w-full">
-        Événements
-        </NavLink>
         <NavLink to={`/formations`} className="pr-3 w-full">
             Formations
         </NavLink>

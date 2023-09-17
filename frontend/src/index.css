@@ -107,13 +107,15 @@ p{
 
 .title-secondary{
   font-weight: bold;
-  color: var(--primary-first);
+  color: var(--dark-primary-second);
   font-size: 34px;
+  text-align: center;
 }
 
 .title-tertiary{
   font-size: 34px;
   font-weight: bold;
+  text-align: center;
   color: var(--light-neutral);
 }
 
@@ -130,6 +132,107 @@ p{
 
 .bg-secondary{
   background: rgba(35,24,71,1);
+  color: white;
 }
 
 
+
+
+.input-search,.input-search .MuiInputBase-root{
+  background-color: #fffaee;
+  border-radius: 15px;
+}
+
+.input-form-login{
+  background-color: #fffaee;
+  padding: 8px;
+}
+
+.title-page{
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.card-page{
+  background-color: #fffaee;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 10px;
+  border: 1px solid var(--light-primary-second, #F4CF74);
+  text-align: center;
+}
+
+.card-page-title{
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--mid-primary-second,#9A7825);
+}
+
+.card-page-link{
+  color: var(--mid-primary-second,#9A7825);
+
+}
+
+.quizz-display{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.boutton-quizz{
+  padding: 10px;
+  background-color: #372770;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  color: white;
+}
+
+.form-user-update{
+  padding: 40px;
+  background-color: #fafafd;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  max-width: none;
+}
+
+.subtitle-login{
+  color:var(--primary-first,#7451EB);
+  font-weight: 700;
+}
+
+
+.img-right-login{
+  flex:0 0 30%;
+}
+
+.login-page{
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.back-breadcumb{
+  color: var(--dark-primary-first,#231947);
+}
+
+.title-form{
+  color: var(--dark-primary-first);
+  font-size: 44px;
+  font-weight: 900;
+}
+
+@media ( min-width : 992px ) {
+.img-superpose{
+  position: absolute;
+  z-index: 99;
+  left: -300px;
+  PADDING-RIGHT: 150px;
+}
+}
+  
+
+.loading-spinner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}

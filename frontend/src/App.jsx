@@ -27,6 +27,7 @@ import UpdateEvent from './pages/Event/UpdateEvent';
 import EventList from './pages/Event/EventList';
 import EventDetails from './pages/Event/Event';
 import AddEvent from './pages/Event/AddEvent';
+import GetUserRole from './components/User/GetUserIsAdmin';
 // ... import other components
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
             <Route exact path='/event/:id' component={EventDetails}/>
             <Route exact path='/add_event' component={AddEvent} />
             <Route exact path='/update_event/:id' component={UpdateEvent}/>
+            <Route exact path='/test' component={GetUserRole}/>
 
             {/* <Route path='*' component={NoPage}/> */}
             <Route exact path='/login' component={Login}/>

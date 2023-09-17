@@ -5,9 +5,11 @@ import logoViolet from "../../assets/Logo Violet/Logo-SRA_v2-07.png";
 import AnswerTimer from "../../components/Quizz/AnswerTimer";
 import test from "../../assets/test250.jpg";
 import triangle from "../../assets/triangle.png";
-import tambour from "../../assets/tambour.png"
-import piano from "../../assets/piano.png"
-import violoncelle from "../../assets/violoncelle.png"
+import tambour from "../../assets/tambour.png";
+import piano from "../../assets/piano.png";
+import violoncelle from "../../assets/violoncelle.png";
+import container1 from "../../assets/container1.png";
+import { Vortex } from  'react-loader-spinner'
 
 
 function MasterclassQuizz() {
@@ -118,14 +120,28 @@ function MasterclassQuizz() {
    
   };
 
+  const onClickBackToMasterclass = () => {
+    history.push('/masterclasses');
+  };
+
 
   const handleOnTimeUp = () => {
-    // setAnswerQuestion(false);
-    // onClickNext(false);
+    setAnswerQuestion(false);
+    onClickNext(false);
   };
 
   if (!quiz) {
-    return <div>Loading...</div>;
+    return <div className="loading-spinner">
+      <Vortex
+    visible={true}
+    height="180"
+    width="180"
+    ariaLabel="vortex-loading"
+    wrapperStyle={{}}
+    wrapperClass="vortex-wrapper"
+    colors={['#7451EB', '#F4CF74', '#231947', '#D1C4FD', '#644D15', '#9A7825']}
+    />
+      </div>;
   }
 
   if (!selectedStarted) {
@@ -136,7 +152,7 @@ function MasterclassQuizz() {
           <li className="mr-3 pl-10 pt-5">
             <a
               onClick={handleCancel}
-              className="inline-block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
+              className="inline-block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white boutton-quizz"
               href="#"
             >
               Annuler
@@ -148,12 +164,12 @@ function MasterclassQuizz() {
         <img src={test} alt="test Image" />
         <h1>{quiz.name}</h1>
       </div>
-      <div className="footer">
+      <div className="footer-quizz pb-10 ">
         <ul className="flex justify-end pr-10">
           <li className="mr-3 pl-10 pt-5">
             <a
               onClick={handleStartQuiz}
-              className="inline-block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
+              className="inline-block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white boutton-quizz"
               href="#"
             >
               Commencer
@@ -167,7 +183,7 @@ function MasterclassQuizz() {
 
   const { title, proposition, answer, xp_value } = quiz.questions[currentQuestion];
   return (
-    <div className="full-container">
+    <div className="full-container-quizz">
       <nav>
         {showAnswerTimer && !showCorrection && !showResult && (
           <AnswerTimer duration={10} onTimeUp={handleOnTimeUp} />
@@ -182,11 +198,13 @@ function MasterclassQuizz() {
         </div>
         <div className="header-title">
         <div className="headerQuizz">
-            {!showCorrection && !showResult ? (
-              <h2>{title}</h2>
-            ) : (
-              <h2>Correction</h2>
-            )}
+        {showResult ? (
+          <h2>Résultat</h2>
+        ) : showCorrection ? (
+          <h2>Correction</h2>
+        ) : (
+          <h2>{title}</h2>
+        )}
           </div>
         </div>
         <div className="header-counter">
@@ -217,9 +235,11 @@ function MasterclassQuizz() {
                 </button>
       
               </div>
+              
             </div>
             <div className="phrase-conclusion"> <p>{feedbackExpression}</p></div>
-                  </div>
+            
+            </div>
         ) : ! showCorrection ? (
           <div className="quizz-container-container">
             {/*<span className='active-question-no'>{currentQuestion + 1}</span>
@@ -256,7 +276,7 @@ function MasterclassQuizz() {
             {/*<span className='active-question-no'>{currentQuestion + 1}</span>
             <span className='total-question'>/{quiz.questions.length}</span> */}
             <div className="image-quizz">
-              <img src={logoViolet} alt="" />
+              <img src={container1} alt="image quizz " />
             </div>
             <div className="liste-reponse">
               <ul className="ul-correction">
@@ -293,31 +313,41 @@ function MasterclassQuizz() {
           <div></div>
           <div></div>
           <div>
-          {showCorrection ? (
-            currentQuestion !== quiz.questions.length - 1 ? (
-              <button
-                className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={onClickContinue}
-              >
-                Continuer
-              </button>
-            ) : (
-              <button
-                className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={handleEnd}
-              >
-                Terminé
-              </button>
-            )
-          ) : (
-            <button
-              className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => onClickNext(answer)}
-              disabled={answerQuestion === null}
-            >
-              Poursuivre
-            </button>
-          )}
+          {showResult ? (
+  <button
+    className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    onClick={onClickBackToMasterclass}
+  >
+    Revenir à la liste des masterclass
+  </button>
+) : (
+  showCorrection ? (
+    currentQuestion !== quiz.questions.length - 1 ? (
+      <button
+        className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={onClickContinue}
+      >
+        Continuer
+      </button>
+    ) : (
+      <button
+        className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={handleEnd}
+      >
+        Terminé
+      </button>
+    )
+  ) : (
+    <button
+      className="bg-primary_first hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      onClick={() => onClickNext(answer)}
+      disabled={answerQuestion === null}
+    >
+      Poursuivre
+    </button>
+  )
+)}
+
   
           </div>
         </div>    </div>

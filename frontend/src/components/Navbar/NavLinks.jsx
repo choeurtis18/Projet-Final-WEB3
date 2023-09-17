@@ -13,20 +13,13 @@ export default function NavLinks() {
         <NavLink to={`/masterclasses`} className="w-full">
             Masterclass
         </NavLink>
-        {!jwt && (
-            <NavLink to={`/login`} className="w-full">
-                Se connecter
-            </NavLink>
-        )}
-
-        {!jwt && (
-            <NavLink to={`/register`} className="w-full">
-                S'inscrire
-            </NavLink>
-        )}
         <NavLink to={`/events`} className="w-full">
-            Events
+        Événements
         </NavLink>
+       
+
+          
+        
       </div>
     );
 };

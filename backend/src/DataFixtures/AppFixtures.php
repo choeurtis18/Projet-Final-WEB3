@@ -442,6 +442,20 @@ class AppFixtures extends Fixture
             $manager->persist($funFact);
 
 
+            //Event
+            $event = new Event();
+            $event->setName("Concours international de chant Elizabeth Connell Prize");
+            $event->setDescription("Elizabeth Connell était une soprano dramatique sud-africaine qui a atteint une renommée internationale grâce à ses performances tout au long de sa carrière. Elle a commencé sa carrière professionnelle en tant que mezzo-soprano avant de passer au soprano.");
+            $event->setDateStart(new \DateTime("2023-09-24 15:30:00"));
+            $event->setDateEnd(new \DateTime("2023-09-24 15:30:00"));
+            $manager->persist($event);
+
+            $event = new Event();
+            $event->setName("Le Concours international de musique Reine Sonja");
+            $event->setDescription("Le concours est organisé sous forme de fondation. Ses partenaires institutionnels sont l'Opéra national et le Ballet de Norvège, l'Académie norvégienne de musique, l'Académie nationale des arts d'Oslo et la Société norvégienne de radiodiffusion.");
+            $event->setDateStart(new \DateTime("2023-09-24 15:30:00"));
+            $event->setDateEnd(new \DateTime("2023-09-24 18:30:00"));
+            $manager->persist($event);
       
 
 

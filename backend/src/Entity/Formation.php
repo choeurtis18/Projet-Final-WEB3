@@ -23,7 +23,7 @@ class Formation
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read_composer'], nullable:true)]
+    #[Groups(['read_composer'])]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'Formation')]

@@ -173,6 +173,29 @@ class UserController extends AbstractController
         return new JsonResponse(['message' => 'Informations mises à jour avec succès']);
     }
 
+    #[Route('/users/xp', name: 'user_xp', methods: ['GET'])]
+    public function getUserXp(): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'message' => "Vous n'avez pas de compte",
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            return $this->json([
+                'xp' => $user->getXp()
+            ]);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
     #[Route('/users/{id}', name: 'user_get', methods: ['GET'])]
     public function getUserInfo(int $id, Request $request, EntityManagerInterface $entityManager, string $appSecret): JsonResponse 
     {
@@ -209,28 +232,5 @@ class UserController extends AbstractController
             'email' => $user->getEmail(),
             'roles' => $user->getRoles(),
         ]);
-    }
-
-    #[Route('/users/xp', name: 'user_xp', methods: ['GET'])]
-    public function getUserXp(): JsonResponse
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        if (!$user) {
-            return $this->json([
-                'message' => "Vous n'avez pas de compte",
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-        try {
-            return $this->json([
-                'xp' => $user->getXp()
-            ]);
-        } catch (\Exception $exception) {
-            return $this->json([
-                'message' => 'missing credentials',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
     }
 }

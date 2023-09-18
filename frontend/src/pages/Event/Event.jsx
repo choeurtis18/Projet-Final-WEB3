@@ -58,7 +58,7 @@ const Event = () => {
             </div>
             {GetUserIsAdmin() && (
             <div className="my-6 flex flex-wrap items-center justify-end">
-                <ActionButton text="Supprimer l'événement" onClick={handleDeleteEvent} nav_link="#"></ActionButton>
+                <ActionButton text="Supprimer l'événement" onClick={handleDeleteEvent} nav_link="/events"></ActionButton>
                 <ActionButton text="Modifier" nav_link={`/update_event/${id}`}></ActionButton>
             </div>
             )}

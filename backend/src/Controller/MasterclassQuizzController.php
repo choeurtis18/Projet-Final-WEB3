@@ -16,7 +16,7 @@ class MasterclassQuizzController extends AbstractController
     public function index(MasterclassQuizzRepository $masterclassQuizzRepository): JsonResponse
     {
         $quizzes = $masterclassQuizzRepository->findAll();
-
+        var_dump($quizzes);
         $quizArray = array_map(function ($quiz) {
             return $quiz->toArray();
         }, $quizzes);

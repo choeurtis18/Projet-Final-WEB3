@@ -138,6 +138,9 @@ p{
 
 
 
+
+
+
 .input-search,.input-search .MuiInputBase-root{
   background-color: #fffaee;
   border-radius: 15px;
@@ -235,4 +238,88 @@ p{
   align-items: center;
   justify-content: center;
   height: 50vh;
+}
+
+
+@media screen and (max-width: 800px) {
+  #root > div > nav > div.max-w-7xl.mx-auto.flex.items-center.justify-between.h-16.px-4.border-b.border-solid.border-slate-600 > div.flex.row.gap-5.md\:w-64 > a:nth-child(2){
+    display: none;
+  }
+  #root > div > div > div > div.header > ul{
+    justify-content:center;
+  }
+  #root > div > div > div > div.footer-quizz.pb-10 > ul{
+    justify-content: center;
+  }
+  #root > div > div > div > div.quizz-pres > h1{
+    text-align: center;
+  }
+  #root > div > div > div > div.headerQuizz > div.header-counter{
+    display: none;
+  }
+  #root > div > div > div > div.quizz-container > div > div.image-quizz{
+    display:none;
+  }
+  #root > div > div > div > div.headerQuizz > div:nth-child(1){
+    flex: none;
+    display: block;  
+  }
+  #root > div > div > div > nav{
+    min-height: 3.5rem;
+  }
+  .full-container-quizz .headerQuizz {
+    display: flex;
+    justify-content: center;
+    padding: 0 30px;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+  .quizz-container .button-quizz {
+    width: 286px
+  }
+  .ul-correction {
+    display: flex !important;
+}
+#root > div > div > div > div.headerQuizz > div:nth-child(1){
+  text-align: center;
+}
+.quizz-container{
+  min-height: 330px;
+}
+.buttonContainer {
+
+  margin-bottom: 2rem;
+}
+
+#root > div > div > div > div.quizz-container > div > div.liste-reponse > p{
+  padding: 0 30px;
+  margin-bottom: 20px;
+}
+
+#root > div > div > div > div.footerQuizz > div.button-footer > div:nth-child(1){
+  display: none;
+}
+
+#root > div > div > div > div.footerQuizz > div.button-footer > div:nth-child(2){
+  display: none;
+}
+
+.quizz-container-container {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+.image-quizz img {
+  min-width: 22px;
+  width: 200px;
+}
+#root > div > div > div > div.quizz-container > div > div.quizz-container-container > div.liste-reponse > button{
+  width: 300px !important;
+  height: 150px !important;
+}
+
+.phrase-conclusion p {
+  margin-bottom: 1rem;
+}
 }

@@ -125,8 +125,8 @@ function MasterclassQuizz() {
 
 
   const handleOnTimeUp = () => {
-    setAnswerQuestion(false);
-    onClickNext(false);
+    // setAnswerQuestion(false);
+    // onClickNext(false);
   };
 
   if (!quiz) {

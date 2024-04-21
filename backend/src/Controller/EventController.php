@@ -55,22 +55,32 @@ class EventController extends AbstractController
 
             $data = json_decode($request->getContent(), true);
             $name = $data['name'];
+            $description = $data['description'];
+            $date_start = $data['date_start'];
+            $date_end = $data['date_end'];
 
             try {
                 if (!$eventRepository->findOneBy(['name' => $name])) {
                     $event = new Event();
                     $event->setName($name);
+                    $event->setDescription($description);
+
+                    $dateStart = new \DateTime($date_start);
+                    $event->setDateStart($dateStart);
+
+                    $dateEnd = new \DateTime($date_end);
+                    $event->setDateEnd($dateEnd);
 
                     $eventRepository->save($event, true);
 
                     return $this->json([
                         'status' => 1,
-                        'message' => "New Event Add"
+                        'message' => "Nouvel événement ajouté"
                     ], Response::HTTP_OK);;                
                 } else {
                     return $this->json([
                         'status' => 0,
-                        'message' => "Event already exists"
+                        'message' => "Cet événement existe déjà"
                     ], Response::HTTP_OK);;     
                 }
 
@@ -83,7 +93,7 @@ class EventController extends AbstractController
         }
 
         #[Route('/event/{id}', name: 'app_delete_event', methods: ['DELETE'])]
-        public function delete_event(UserRepository $userRepository, EventRepository $eventRepository, int $id, EntityManagerInterface $em) 
+        public function delete_event(UserRepository $userRepository, int $id, EntityManagerInterface $em) 
         { 
             $current_user = $this->getUser();
             $admins = $userRepository->getAllAdminUser();
@@ -116,7 +126,7 @@ class EventController extends AbstractController
 
         #[Route('/event/{id}', name: 'app_update_event', methods: ['PATCH'])]
         public function update_event(Request $request, EntityManagerInterface $em, int $id,
-        UserRepository $userRepository, EventRepository $eventRepository) { 
+        UserRepository $userRepository) { 
             $current_user = $this->getUser();
             $admins = $userRepository->getAllAdminUser();
 
